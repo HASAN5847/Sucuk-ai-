@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCUK AI</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ff4747 50%, #ffffff 50%);
+            color: #ff6b6b;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            border: 3px solid #ff4747;
+            padding: 25px;
+            border-radius: 15px;
+            background: #2b1616;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .logo-container {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #ff4747;
+            background-color: #1a0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 71, 71, 0.5);
+        }
+        .logo-text {
+            color: #ff4747;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        h1 { font-size: 28px; margin-top: 10px; margin-bottom: 5px; color: #ff4747; text-align: left; padding-left: 5px; }
+        .subtitle { color: #ffa6a6; font-size: 13px; margin-bottom: 25px; text-align: left; padding-left: 5px; }
+        
+        input[type="text"] {
+            width: 96%; 
+            padding: 20px 10px; 
+            border: 2px solid #5c2e2e;
+            background: #1a0f0f; 
+            color: #ffa6a6; 
+            font-size: 20px;
+            border-radius: 10px; 
+            outline: none; 
+            text-align: center; 
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            border-color: #ff4747;
+        }
+        button {
+            padding: 15px 30px; background: #ff4747; color: white;
+            border: none; font-size: 18px; font-weight: bold; border-radius: 8px; width: 96%;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        button:active {
+            background: #cc3939;
+        }
+        .output-box {
+            margin-top: 5px; border: 1px dashed #5c2e2e; padding: 15px;
+            background: #1a0f0f; min-height: 50px; border-radius: 8px;
+            font-size: 18px; color: #ffb3b3; text-align: left;
+        }
+        .emoji-alani {
+            font-size: 55px;
+            margin-bottom: 10px;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo-container">
+        <span class="logo-text">SUCUK</span>
+    </div>
+    
+    <h1>SUCUK AI</h1>
+    <div class="subtitle">Merkezi Yapay Zeka Sistemi</div>
+    
+    <input type="text" id="soruKutusu" placeholder="Sorunuzu buraya yazın..." autocomplete="off">
+    <br>
+    <button id="analizButonu">SORUYU ANALİZ ET</button>
+    
+    <div class="output-box" id="cevapEkrani">
+        <div id="durumEmoji" class="emoji-alani"></div>
+        <span id="yaziAlani">> Sucuk AI online...</span>
+    </div>
+</div>
+
+<script>
+    let soruSayisi = 0;
+
+    const genelCevaplar = [
+        "Bu talebinizi merkezi veri tabanımda analiz ettim ve onayladım",
+        "İstediğiniz şey üzerinde şu an veri tabanımda derinlemesine çalışıyorum",
+        "Sistem bu isteğinizi yerine getirmek için hazır bekliyor",
+        "Analiz tamamlandı isteğiniz yapay zeka algoritmalarıma çok uygun",
+        "Harika bir soru Sucuk sunucuları şu an bu konuyu inceliyor",
+        "Verileri taradım bu isteğinizi gerçekleştirmek çok kolay",
+        "Merkezi yapay zeka sistemi bu mesajınızı başarıyla kaydetti"
+    ];
+
+    function otomatikCevapla() {
+        const soruKutusu = document.getElementById("soruKutusu");
+        const soru = soruKutusu.value.trim();
+        if(soru === "") return;
+
+        let nihaiCevap = "";
+        let secilenEmoji = "";
+
+        const kucukSoru = soru.toLowerCase();
+        const temizSoru = soru.replace(/\s+/g, '');
+
+        if (kucukSoru.includes("eylül") || kucukSoru.includes("eylul")) {
+            nihaiCevap = "Eylül malın teki";
+            secilenEmoji = "🤪";
+        } 
+        else if (temizSoru.match(/^(\d+)\+(\d+)$/)) {
+            const eslesme = temizSoru.match(/^(\d+)\+(\d+)$/);
+            const toplam = parseInt(eslesme[1]) + parseInt(eslesme[2]);
+            nihaiCevap = "Bu işlemin sonucu: " + toplam;
+            secilenEmoji = "🤓";
+        }
+        else if (temizSoru.match(/^(\d+)[\*x](\d+)$/)) {
+            const eslesme = temizSoru.match(/^(\d+)[\*x](\d+)$/);
+            const carpi = parseInt(eslesme[1]) * parseInt(eslesme[2]);
+            nihaiCevap = "Çarpma işleminin sonucu: " + carpi;
+            secilenEmoji = "🤓";
+        }
+        else if (temizSoru.match(/^(\d+)\/(\d+)$/)) {
+            const eslesme = temizSoru.match(/^(\d+)\/(\d+)$/);
+            const sayi2 = parseInt(eslesme[2]);
+            if (sayi2 === 0) {
+                nihaiCevap = "Bir sayı sıfıra bölünemez";
+                secilenEmoji = "❌";
+            } else {
+                const bolum = parseInt(eslesme[1]) / sayi2;
+                nihaiCevap = "Bölme işleminin sonucu: " + bolum;
+                secilenEmoji = "🤓";
+            }
+        }
+        else {
+            soruSayisi++;
+            if (soruSayisi === 1) {
+                const rastgeleIndis = Math.floor(Math.random() * genelCevaplar.length);
+                nihaiCevap = genelCevaplar[rastgeleIndis];
+                secilenEmoji = "😎"; 
+            } else if (soruSayisi === 2) {
+                nihaiCevap = "Bu sorunun cevabını bilmiyorum lütfen Hasan'a sor";
+                secilenEmoji = "🤔"; 
+            } else if (soruSayisi === 3) {
+                nihaiCevap = "Bağlantı koptu site kapandı";
+                secilenEmoji = "🤪"; 
+            } else {
+                nihaiCevap = "Sistem tamamen kapandı...";
+                secilenEmoji = "❌";
+            }
+        }
+
+        const yaziAlani = document.getElementById("yaziAlani");
+        const emojiKutusu = document.getElementById("durumEmoji");
+        
+        emojiKutusu.style.display = "none";
+        yaziAlani.innerText = "> Soru sunucuya iletildi Analiz ediliyor...";
+        
+        setTimeout(() => {
+            yaziAlani.innerText = "> ";
+            
+            if (secilenEmoji) {
+                emojiKutusu.innerText = secilenEmoji;
+                emojiKutusu.style.display = "block";
+            }
+
+            let i = 0;
+            function yaz() {
+                if (i < nihaiCevap.length) {
+                    yaziAlani.innerText += nihaiCevap.charAt(i);
+                    i++;
+                    setTimeout(yaz, 50);
+                } else {
+                    soruKutusu.value = "";
+                }
+            }
+            yaz();
+        }, 1500);
+    }
+
+    document.getElementById("analizButonu").addEventListener("click", otomatikCevapla);
+
+    document.getElementById("soruKutusu").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            otomatikCevapla();
+        }
+    });
+</script>
+</body>
+</html>
