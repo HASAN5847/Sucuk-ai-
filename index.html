@@ -47,7 +47,6 @@
             width: 100%;
             margin: 0 auto;
         }
-        /* ANA PLANDAKİ BÜYÜK SUCUK AI LOGOSU */
         .main-logo-watermark {
             position: absolute;
             top: 45%;
@@ -57,8 +56,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0.15; /* Hafif ve şık durması için şeffaflık */
-            pointer-events: none; /* Mesajların tıklanmasını engellemesin */
+            opacity: 0.15;
+            pointer-events: none;
             text-align: center;
             z-index: 0;
         }
@@ -169,20 +168,19 @@
 </div>
 
 <div class="chat-container">
-    <!-- ANA PLANDAKİ ARKA PLAN LOGOSU -->
     <div class="main-logo-watermark">
         <div class="big-emoji">🌭</div>
         <div class="big-title">SUCUK AI</div>
     </div>
 
     <div id="chatMessages" class="chat-messages">
-        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
+        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Veri bankam tamamen güncellendi Artık Türkiye nin tüm illerini başkentini dünya üzerindeki tüm popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirim! 📸</div>
     </div>
 </div>
 
 <div class="chat-input-area">
     <div class="input-wrapper">
-        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya 'kedi fotoğrafı' gibi bir görsel isteyin..." onkeypress="handleKeyPress(event)">
+        <input type="text" id="userInput" class="chat-input" placeholder="Bir il, hayvan sorun veya görsel isteyin..." onkeypress="handleKeyPress(event)">
         <button class="send-btn" onclick="sendMessage()">Gönder</button>
     </div>
 </div>
@@ -223,114 +221,113 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function handleBotResponse(input) {
-        const text = input.toLowerCase().trim();
+    // GENİŞLETİLMİŞ COĞRAFYA VE İLLER VERİ BANKASI
+    const illerHafizasi = {
+        "adana": "🌾 Adana Akdeniz Bölgesi nde yer alır Kebap şalgam ve pamuğu ile meşhurdur Plaka kodu 01 dir",
+        "adiyaman": "⛰️ Adıyaman Güneydoğu Anadolu da bulunur Nemrut Dağı Milli Parkı ve dev heykel başlarıyla dünya çapında tanınır Plaka kodu 02 dir",
+        "afyonkarahisar": "♨️ Afyonkarahisar Ege Bölgesi ndedir Termal otelleri sucuk ve lokumu ile ünlüdür Plaka kodu 03 tür",
+        "agri": "🏔️ Ağrı Doğu Anadolu dadır Türkiye nin en yüksek zirvesi olan Ağrı Dağı ve İshak Paşa Sarayı buradadır Plaka kodu 04 tür",
+        "amasya": "🍏 Amasya Karadeniz Bölgesi ndedir Şehzadeler şehri olarak bilinir Kral Kaya Mezarları ve elması meşhurdur Plaka kodu 05 tir",
+        "ankara": "🇹🇷 Ankara İç Anadolu Bölgesi nde yer alan Türkiye Cumhuriyeti nin başkentidir Anıtkabir bu ilimizdedir Plaka kodu 06 dır",
+        "antalya": "🏖️ Antalya Akdeniz in turizm başkentidir Dünyaca ünlü plajları antik kentleri ve şelaleleri vardır Plaka kodu 07 dir",
+        "artvin": "🌲 Artvin Karadeniz in en dik ve yeşil ilidir Karagöl tabiat parkı ve yaylalarıyla doğa harikasıdır Plaka kodu 08 dir",
+        "aydin": "🌿 Aydın Ege Bölgesi ndedir İnciri efeleri ve Kuşadası sahili ile bilinir Plaka kodu 09 dur",
+        "balikesir": "🌊 Balıkesir hem Ege hem Marmara ya kıyısı olan zeytini ve Ayvalık tostları ile meşhur ilimizdir Plaka kodu 10 dur",
+        "bilecik": "⚔️ Bilecik Osmanlı İmparatorluğu nun kurulduğu topraklardır Şeyh Edebali Türbesi buradadır Plaka kodu 11 dir",
+        "bingol": "❄️ Bingöl Doğu Anadolu da yer alır Yüzen adaları ve şifalı kaplıcaları ünlüdür Plaka kodu 12 dir",
+        "bitlis": "🏰 Bitlis Doğu Anadolu Bölgesi ndedir Beş minaresi tarihi evleri ve Nemrut krater gölü meşhurdur Plaka kodu 13 tür",
+        "bolu": "🍁 Bolu Abant ve Gölcük gölleri aşçıları ve muhteşem doğasıyla bilinen Batı Karadeniz şehridir Plaka kodu 14 tür",
+        "burdur": "💎 Burdur Akdeniz dedir Türkiye nin Maldivleri olarak anılan Salda Gölü bu ilimizdedir Plaka kodu 15 tir",
+        "bursa": "🟢 Bursa Osmanlı nın ilk başkentlerindendir Uludağ kayak merkezi iskender kebabı ve ipeği ünlüdür Plaka kodu 16 dır",
+        "canakkale": "🏹 Çanakkale tarihi destanların yazıldığı Troya Antik Kenti ve Şehitler Abidesi nin bulunduğu kahraman şehrimizdir Plaka kodu 17 dir",
+        "cankiri": "🧂 Çankırı İç Anadolu dadır Dünyanın en büyük tuz mağaralarından birine ev sahipliği yapar Plaka kodu 18 dir",
+        "corum": "🗿 Çorum Karadeniz Bölgesi nin iç kısmındadır Hititlerin başkenti Hattuşaş buradadır Leblebisi ünlüdür Plaka kodu 19 dur",
+        "denizli": "🦢 Denizli Ege Bölgesi ndedir Pamukkale travertenleri ve dünyaca ünlü Denizli horozu ile tanınır Plaka kodu 20 dir",
+        "diyarbakir": "🍉 Diyarbakır tarihi surları Hevsel bahçeleri ve dev karpuzları ile bilinen kültür şehridir Plaka kodu 21 dir",
+        "edirne": "🕌 Edirne Osmanlı ya başkentlik yapmış Mimar Sinan ın şaheseri Selimiye Camii ve Kırkpınar yağlı güreşleri ile ünlüdür Plaka kodu 22 dir",
+        "elazig": "🐟 Elazığ Doğu Anadolu Bölgesi ndedir Harput Kenti Çaydaçıra oyunu ve Hazar Gölü ile bilinir Plaka kodu 23 tür",
+        "erzincan": "🧀 Erzincan tulum peyniri bakır işlemeciliği ve Girlevik Şelalesi ile meşhur Doğu Anadolu ilimizdir Plaka kodu 24 tür",
+        "erzurum": "⛷️ Erzurum Palandöken kayak merkezi cağ kebabı ve çifte minareli medresesi ile ünlüdür Plaka kodu 25 tir",
+        "eskisehir": "🎓 Eskişehir öğrenci kenti olarak bilinir Porsuk Çayı lüle taşı ve çiböreği meşhurdur Plaka kodu 26 dır",
+        "gaziantep": "baklava Antep fıstığı ve zengin mutfak kültürüyle UNESCO tescilli gastronomi şehrimizdir Plaka kodu 27 dir",
+        "giresun": "🌰 Giresun fındığın anavatanıdır Dünyanın en kaliteli fındıkları burada yetişir Giresun Adası meşhurdur Plaka kodu 28 dir",
+        "gumushane": "👑 Gümüşhane pestil köme Karaca Mağarası ve tarihi Tomara Şelalesi ile ünlüdür Plaka kodu 29 dur",
+        "hakkari": "🏔️ Hakkari Cilo Dağları buzulları ve el değmemiş dik coğrafyasıyla bilinen sınır şehrimizdir Plaka kodu 30 dur",
+        "hatay": "künefesi tepsikebabı ve mozaik müzesiyle köklü bir medeniyet ve gastronomi kentidir Plaka kodu 31 dir",
+        "isparta": "🌹 Isparta dünyaca ünlü gül bahçeleri halıları ve lavanta köyleri ile bilinen Akdeniz ilidir Plaka kodu 32 dir",
+        "mersin": "🌴 Mersin tantunisi cezeryesi Kızkalesi ve devasa limanıyla Akdeniz in incisidir Plaka kodu 33 tür",
+        "istanbul": "🌉 İstanbul iki kıtayı birleştiren tarihi sarayları camileri ve boğazı ile dünyanın en önemli metropollerinden biridir Plaka kodu 34 tür",
+        "izmir": "🕊️ İzmir Ege nin incisidir Kordon boyu saat kulesi boyozu ve Efes Antik Kenti ile bilinir Plaka kodu 35 tir",
+        "kars": "🧀 Kars gravyer peyniri Ani Harabeleri ve kışın donan Çıldır Gölü ile ünlüdür Plaka kodu 36 dır",
+        "kastamonu": "🌲 Kastamonu sarımsağı kanyonları tarihi konakları ve Ilgaz Dağı ile meşhurdur Plaka kodu 37 dir",
+        "kayseri": "🥟 Kayseri mantısı pastırması sucuğu ve Erciyes Dağı ile bilinen İç Anadolu sanayi şehridir Plaka kodu 38 dir",
+        "kirklareli": "🍇 Kırklareli Trakya da yer alır Dupnisa Mağarası ve iğneada longoz ormanları ile doğa harikasıdır Plaka kodu 39 dur",
+        "kirsehir": "🪕 Kırşehir Neşet Ertaş ve Ahilik kültürünün merkezidir Plaka kodu 40 tır",
+        "kocaeli": "🏭 Kocaeli sanayinin kalbidir Pişmaniyesi ve Kartepe kayak merkezi meşhurdur Plaka kodu 41 dir",
+        "konya": "🕌 Konya Mevlana Celaleddin Rumi türbesi etli ekmeği ve Türkiye nin en büyük yüzölçümüne sahip ili olmasıyla bilinir Plaka kodu 42 dir",
+        "kutahya": "🏺 Kütahya porselenleri çinileri ve tarihi Frig Vadisi ile bilinen ege şehridir Plaka kodu 43 tür",
+        "malatya": "🍑 Malatya dünya kayısı üretiminin merkezidir Plaka kodu 44 tür",
+        "manisa": "🍇 Manisa sultaniye üzümü mesir macunu ve Spil Dağı ile meşhurdur Plaka kodu 45 tir",
+        "kahramanmaras": "🍦 Kahramanmaraş dövme dondurması biberi ve tarihi kalesi ile ünlüdür Plaka kodu 46 dır",
+        "mardin": "🗿 Mardin taş evleri tarihi dokusu ve gümüş telkari sanatı ile açık hava müzesi gibidir Plaka kodu 47 dir",
+        "mugla": "🏖️ Muğla Bodrum Marmaris Fethiye gibi dünyaca ünlü turizm ilçelerine ev sahipliği yapar Plaka kodu 48 dir",
+        "mus": "🌾 Muş lalesi tarihi Murat Köprüsü ve geniş ovası ile bilinir Plaka kodu 49 dur",
+        "nevsehir": "🎈 Nevşehir Kapadokya peri bacaları ve balon turları ile dünya turizminin merkezlerindendir Plaka kodu 50 dir",
+        "nigde": "🍏 Niğde patatesi elması ve Aladağlar milli parkı ile tanınır Plaka kodu 51 dir",
+        "ordu": "🌲 Ordu fındığı yaylaları ve Boztepe teleferiği ile Karadeniz in en güzel kıyı şehirlerindendir Plaka kodu 52 dir",
+        "rize": "🌱 Rize çayın başkentidir Ayder Yaylası fırtına deresi ve kaçkar dağları ile ünlüdür Plaka kodu 53 tür",
+        "sakarya": "🌿 Sakarya ıslama köftesi kabak tatlısı ve Sapanca Gölü ile bilinir Plaka kodu 54 tür",
+        "samsun": "🇹🇷 Samsun Mustafa Kemal Atatürk ün 19 Mayıs 1919 da kurtuluş mücadelesini başlattığı meşale şehrimizdir Plaka kodu 55 tir",
+        "siirt": "🥜 Siirt fıstığı büryan kebabı ve battaniyesi ile meşhurdur Plaka kodu 56 dır",
+        "sinop": "⚓ Sinop Türkiye nin en kuzey noktası olan İnceburun a ve tek doğal limanına sahip sakin şehirdir Plaka kodu 57 dir",
+        "sivas": "🏰 Sivas Divriği Ulu Camii Kangal köpeği ve tarihi medreseleri ile ünlüdür Plaka kodu 58 dir",
+        "tekirdag": "🥩 Tekirdağ köftesi ve geniş ayçiçeği tarlaları ile ünlüdür Plaka kodu 59 dur",
+        "tokat": "🍃 Tokat yaprağı kebabı ve tarihi Ballıca Mağarası ile bilinir Plaka kodu 60 tır",
+        "trabzon": "⚽ Trabzon Sümela Manastırı Uzungöl ü ve hamsisi ile ünlü Karadeniz şehridir Plaka kodu 61 dir",
+        "tunceli": "🌊 Tunceli Munzur Gözeleri Munzur Vadisi Milli Parkı ile doğa harikası bir ilimizdir Plaka kodu 62 dir",
+        "sanliurfa": "🍢 Şanlıurfa Peygamberler şehri olarak bilinir Göbeklitepe Balıklıgöl ve çiğ köftesi meşhurdur Plaka kodu 63 tür",
+        "usak": "🧼 Uşak battaniyesi tarhanası ve dünyanın en büyük ikinci kanyonu olan Ulubey Kanyonu ile ünlüdür Plaka kodu 64 tür",
+        "van": "🐱 Van kedisi Van Gölü otlu peyniri ve Akdamar Kilisesi ile meşhurdur Plaka kodu 65 tir",
+        "yozgat": "🍲 Yozgat testi kebabı ve Türkiye nin ilk milli parkı olan Çamlık Milli Parkı ile bilinir Plaka kodu 66 dır",
+        "zonguldak": "💎 Zonguldak taş kömürü madenleri ve emeğin başkenti olmasıyla ünlüdür Plaka kodu 67 dir",
+        "aksaray": "🐫 Aksaray Ihlara Vadisi ve Somuncu Baba türbesi ile bilinir Plaka kodu 68 dir",
+        "bayburt": "🏰 Bayburt Baksı Müzesi ve tarihi Bayburt Kalesi ile tanınır Plaka kodu 69 dur",
+        "karaman": "🌾 Karaman Türkçenin resmi dil ilan edildiği Karamanoğlu Mehmet Bey in diyarıdır Plaka kodu 70 tir",
+        "kirikkale": "🔧 Kırıkkale silah sanayisinin merkezidir Plaka kodu 71 dir",
+        "batman": "🛢️ Batman petrol rafinerisi ve tarihi Hasankeyf antik kenti ile bilinir Plaka kodu 72 dir",
+        "sirnak": "⛰️ Şırnak Cudi Dağı ve Kasrik Boğazı ile tanınır Plaka kodu 73 tür",
+        "bartin": "🌲 Bartın Amasra ilçesi ve tarihi ahşap evleri ile meşhurdur Plaka kodu 74 tür",
+        "ardahan": "❄️ Ardahan Çıldır Gölü ve kaşar peyniri ile ünlüdür Plaka kodu 75 tir",
+        "igdir": "🍎 Iğdır Türkiye nin en doğu ucudur kayısısı meşhurdur Plaka kodu 76 dır",
+        "yalova": "🌳 Yalova termal kaplıcaları ve Atatürk ün Yürüyen Köşk ü ile bilinir Plaka kodu 77 dir",
+        "karabuk": "🏠 Karabük Safranbolu evleri ve demir çelik fabrikası ile ünlüdür Plaka kodu 78 dir",
+        "kilis": "🍇 Kilis tavası ve zeytinyağı ile meşhur sınır ilimizdir Plaka kodu 79 dur",
+        "osmaniye": "🥜 Osmaniye yer fıstığı ile ünlüdür Plaka kodu 80 dir",
+        "duzce": "🍃 Düzce fındığı şelaleleri ve rafting alanları ile bilinir Plaka kodu 81 dir"
+    };
 
-        // GÖRSEL BULMA SİSTEMİ
-        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
-            let temizKelime = text;
-            
-            const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster'];
-            silinecekler.forEach(kelime => {
-                temizKelime = temizKelime.split(kelime).join('');
-            });
-            
-            temizKelime = temizKelime.trim();
-
-            if (temizKelime === '') {
-                temizKelime = 'cat';
-            }
-
-            let ingilizceArama = temizKelime;
-            if (temizKelime === 'kedi') ingilizceArama = 'cat';
-            else if (temizKelime === 'köpek' || temizKelime === 'kopek') ingilizceArama = 'dog';
-            else if (temizKelime === 'araba') ingilizceArama = 'car';
-            else if (temizKelime === 'aslan') ingilizceArama = 'lion';
-            else if (temizKelime === 'kuş' || temizKelime === 'kus') ingilizceArama = 'bird';
-            else if (temizKelime === 'uzay') ingilizceArama = 'space';
-            else if (temizKelime === 'sucuk') ingilizceArama = 'sausage';
-
-            const resimHtml = `<div class="image-container"><img src="https://images.unsplash.com/featured/?${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
-            return;
-        }
-
-        const hayvanBilgileri = [
-            "🦁 Çitalar sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler 🐆",
-            "🐋 Mavi balinaların kalbi o kadar büyüktür ki bir insan atardamarlarının içinde rahatça yüzebilir 🌊",
-            "🐙 Ahtapotların tam 3 tane kalbi ve dokuz tane beyni vardır Ayrıca kanları mavi renktedir 💎"
-        ];
-
-        const turkiyeBilgileri = [
-            "🇹🇷 Türkiye toprakları üzerinde kurulu olan Göbeklitepe insanlık tarihinin bilinen en eski tapınağıdır 🏛️",
-            "🌍 İstanbul dünyada iki kıta üzerine kurulmuş tek metropoldür 🌉"
-        ];
-
-        const ataturkBilgileri = [
-            "✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur 🇹🇷",
-            "📚 Atatürk hayatı boyunca 4000'den fazla kitap okumuştur ve kendisi aynı zamanda bir Geometri kitabı yazmıştır 📐"
-        ];
-
-        const egitimBilgileri = [
-            "📝 Düzenli ve planlı ders çalışmak bilgilerin kalıcı hafızaya geçmesini sağlar 🧠",
-            "⏰ Pomodoro tekniği odaklanmayı en üst seviyeye çıkaran harika bir yöntemdir ⏱️"
-        ];
-
-        const sakalar = [
-            "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
-            "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳"
-        ];
-
-        if (text.includes('atatürk') || text.includes('ataturk')) {
-            appendMessage(ataturkBilgileri[Math.floor(Math.random() * ataturkBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('türkiye') || text.includes('turkiye')) {
-            appendMessage(turkiyeBilgileri[Math.floor(Math.random() * turkiyeBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('hayvan') || text.includes('aslan') || text.includes('kedi')) {
-            appendMessage(hayvanBilgileri[Math.floor(Math.random() * hayvanBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders')) {
-            appendMessage(egitimBilgileri[Math.floor(Math.random() * egitimBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
-            appendMessage(sakalar[Math.floor(Math.random() * sakalar.length)], 'bot-message');
-            return;
-        }
-
-        const mathPattern = /^[0-9\s\+\-\*\/\.\(\)]+$/;
-        let cleanMathInput = input.replace(/x/gi, '*');
-
-        if (mathPattern.test(cleanMathInput)) {
-            try {
-                const temizIslem = cleanMathInput.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
-                const sonuc = Function('"use strict";return (' + temizIslem + ')')();
-                if (sonuc !== undefined && !isNaN(sonuc)) {
-                    appendMessage(`📊 İşleminizin sonucu: ${sonuc} ✅`, 'bot-message');
-                    return;
-                }
-            } catch (e) {
-                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
-                return;
-            }
-        }
-
-        if (text === 'merhaba' || text === 'selam') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights, camera, action!", 'bot-message');
-            return;
-        }
-
-        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
-    }
-</script>
-
-</body>
-</html>
+    // GENİŞLETİLMİŞ HAYVANLAR VERİ BANKASI
+    const hayvanlarHafizasi = {
+        "kedi": "🐱 Kediler günün yaklaşık 12-16 saatini uyuyarak geçirirler Harika refleksleri ve çok keskin görüş yetenekleri vardır",
+        "kopek": "🐕 Köpekler insanların en sadık dostlarıdır Koku alma duyuları bir insandan tam 10 bin ila 100 bin kat daha güçlüdür",
+        "aslan": "🦁 Aslanlar ormanların kralı olarak bilinir Gurur adı verilen büyük aile grupları halinde yaşarlar ve kükremeleri 8 kilometre uzaktan duyulabilir",
+        "kaplan": "🐯 Kaplanlar dünyadaki en büyük kedigillerdir Harika yüzücülerdir ve her kaplanın kürkündeki çizgiler tıpkı insan parmak izi gibi tamamen benzersizdir",
+        "leopar": "🐆 Leoparlar ağaçlara tırmanma konusunda ustadırlar Avlarını diğer yırtıcılardan korumak için genellikle ağaç dallarına taşırlar",
+        "cita": "🐆 Çitalar kara dünyasının en hızlı canlısıdır Sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler",
+        "aslan": "🦁 Ormanların kralı aslanların kükremesi tam 8 kilometre mesafeden rahatlıkla duyulabilir",
+        "fil": "🐘 Filler dünyadaki en büyük kara memelisidir Hortumlarında yaklaşık 40 bin kas bulunur ve birbirleriyle çok uzak mesafelerden infrasonik seslerle haberleşebilirler",
+        "balina": "🐋 Mavi balinalar dünya tarihinde yaşamış en büyük canlıdır Kalpleri küçük bir araba boyutundadır ve sadece dili bir filin ağırlığına eşittir",
+        "yunus": "🐬 Yunuslar son derece zeki canlılardır Uyurken beyinlerinin sadece bir yarısını kapatırlar, diğer yarısı tehlikelere karşı açık kalır",
+        "kopekbaligi": "🦈 Köpekbalıklarının iskeletleri kemikten değil kıkırdaktan oluşur Yaşamları boyunca binlerce kez diş değiştirebilirler",
+        "kartal": "🦅 Kartallar muazzam bir görme yeteneğine sahiptir İnsanlardan 4-5 kat daha net görebilirler ve havada uçarken kilometrelerce uzaktaki avlarını saptayabilirler",
+        "baykus": "🦉 Baykuşlar gözlerini hareket ettiremezler Ancak kafalarını tam 270 derece döndürerek arkalarını görebilirler Avlarını tamamen sessiz uçarak yakalarlar",
+        "aygiri": "🦛 Su aygırları nehirlerde yaşar Çok agresif canlılardır ve sütleri pembe renktedir",
+        "timsah": "🐊 Timsahlar avlarını yerken gözyaşı bezleri uyarılır Bu yüzden ortaya çıkan duruma timsah gözyaşları denir",
+        "zurafa": "🦒 Zürafalar dünyanın en uzun canlılarıdır Boyunlarında tıpkı insanlar gibi sadece 7 adet omur kemiği bulunur Dilleri ise siyah-mor renktedir",
+        "kurt": "🐺 Kurtlar çok disiplinli sürüler halinde yaşarlar Uluyarak diğer sürülere sınırlarını bildirir ve kendi üyeleriyle iletişim kurarlar",
+        "aygiri": "🦛 Su aygırları devasa cüsselerine rağmen karada saatte 30 kilometre hızla koşabilirler",
+        "ayi": "🐻 Ayılar çok güçlü koku alma duyusuna sahiptir Kış uykusuna yatarak aylarca hiçbir şey yemeden hayatta kalabilirler",
+        "maymun": "🐒 Maymunlar problem çözme yetenekleri yüksek araç gereç kullanabilen çok zeki canlılardır",
+        "penguen": "🐧 Penguenler uçamayan ama deniz altında adeta uçarcasına çok hızlı yüzen kuşlardır Eşlerine çok sadıktırlar",
+        "flamingo": "🦩 Flamingolar tüylerindeki pembe rengi yedikleri karides ve yosunlardan alırlar Genelde tek ayak üzerinde dururlar",
+        "deve": "🐫 Develer hörgüçlerinde su değil yağ depolarlar Bu sayede çöl şartlarında günlerce susuz ve yemeksi
