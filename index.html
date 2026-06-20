@@ -37,6 +37,41 @@
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        /* ANA PLANDAKİ BÜYÜK SUCUK AI LOGOSU */
+        .main-logo-watermark {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.15; /* Hafif ve şık durması için şeffaflık */
+            pointer-events: none; /* Mesajların tıklanmasını engellemesin */
+            text-align: center;
+            z-index: 0;
+        }
+        .main-logo-watermark .big-emoji {
+            font-size: 90px;
+            margin-bottom: 10px;
+        }
+        .main-logo-watermark .big-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ff4757;
+            letter-spacing: 2px;
+        }
         .chat-messages {
             flex: 1;
             padding: 20px;
@@ -44,10 +79,9 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            background-color: #ffffff;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
             box-sizing: border-box;
         }
         .message {
@@ -72,10 +106,10 @@
             border-bottom-left-radius: 2px;
         }
         .image-container {
-            margin-top: 10px;
+            margin-top: 12px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             max-width: 100%;
         }
         .image-container img {
@@ -89,10 +123,9 @@
             border-top: 1px solid #e0e0e0;
             position: sticky;
             bottom: 0;
+            z-index: 2;
         }
         .input-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
             display: flex;
         }
         .chat-input {
@@ -135,8 +168,16 @@
     <div class="logo-box">🌭 SUCUK AI</div>
 </div>
 
-<div id="chatMessages" class="chat-messages">
-    <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını bulup getirebilirim! 📸</div>
+<div class="chat-container">
+    <!-- ANA PLANDAKİ ARKA PLAN LOGOSU -->
+    <div class="main-logo-watermark">
+        <div class="big-emoji">🌭</div>
+        <div class="big-title">SUCUK AI</div>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
+    </div>
 </div>
 
 <div class="chat-input-area">
@@ -185,108 +226,83 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // FOTOĞRAF OLUŞTURMA/BULMA SİSTEMİ
-        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi') || text.includes('cizim')) {
-            let aramaKelimesi = text
-                .replace('fotoğrafı', '')
-                .replace('fotografi', '')
-                .replace('fotoğraf', '')
-                .replace('fotograf', '')
-                .replace('resmi', '')
-                .replace('resme', '')
-                .replace('resim', '')
-                .replace('görseli', '')
-                .replace('gorseli', '')
-                .replace('görsel', '')
-                .replace('gorsel', '')
-                .replace('çizimi', '')
-                .replace('cizimi', '')
-                .replace('çizim', '')
-                .replace('cizim', '')
-                .replace('getir', '')
-                .replace('bul', '')
-                .replace('yap', '')
-                .replace('oluştur', '')
-                .trim();
+        // GÖRSEL BULMA SİSTEMİ
+        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
+            let temizKelime = text;
+            
+            const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster'];
+            silinecekler.forEach(kelime => {
+                temizKelime = temizKelime.split(kelime).join('');
+            });
+            
+            temizKelime = temizKelime.trim();
 
-            if (aramaKelimesi === '') {
-                aramaKelimesi = 'sucuk';
+            if (temizKelime === '') {
+                temizKelime = 'cat';
             }
 
-            const resimHtml = `<div class="image-container"><img src="https://source.unsplash.com/featured/?${encodeURIComponent(aramaKelimesi)}" alt="${aramaKelimesi}" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?w=500'"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum "${aramaKelimesi}" görseli:`, 'bot-message', resimHtml);
+            let ingilizceArama = temizKelime;
+            if (temizKelime === 'kedi') ingilizceArama = 'cat';
+            else if (temizKelime === 'köpek' || temizKelime === 'kopek') ingilizceArama = 'dog';
+            else if (temizKelime === 'araba') ingilizceArama = 'car';
+            else if (temizKelime === 'aslan') ingilizceArama = 'lion';
+            else if (temizKelime === 'kuş' || temizKelime === 'kus') ingilizceArama = 'bird';
+            else if (temizKelime === 'uzay') ingilizceArama = 'space';
+            else if (temizKelime === 'sucuk') ingilizceArama = 'sausage';
+
+            const resimHtml = `<div class="image-container"><img src="https://images.unsplash.com/featured/?${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
+            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
             return;
         }
 
-        // Veri bankası listeleri
         const hayvanBilgileri = [
             "🦁 Çitalar sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler 🐆",
             "🐋 Mavi balinaların kalbi o kadar büyüktür ki bir insan atardamarlarının içinde rahatça yüzebilir 🌊",
-            "🐙 Ahtapotların tam 3 tane kalbi ve dokuz tane beyni vardır Ayrıca kanları mavi renktedir 💎",
-            "🦩 Flamingolar sadece kafaları baş alkali durduğunda yemek yiyebilirler 🌸",
-            "🦉 Baykuşlar göz kürelerini hareket ettiremezler Bu yüzden arkalarını görmek için kafalarını 270 derece döndürürler 👑"
+            "🐙 Ahtapotların tam 3 tane kalbi ve dokuz tane beyni vardır Ayrıca kanları mavi renktedir 💎"
         ];
 
         const turkiyeBilgileri = [
             "🇹🇷 Türkiye toprakları üzerinde kurulu olan Göbeklitepe insanlık tarihinin bilinen en eski tapınağıdır 🏛️",
-            "🌍 İstanbul dünyada iki kıta (Asya ve Avrupa) üzerine kurulmuş tek metropoldür 🌉",
-            "🏖️ Dünyanın en eski yerleşim yerlerinden biri olan Truva antik kenti Çanakkale sınırları içerisindedir 🐴",
-            "⛰️ Türkiye ortalama 1132 metre yüksekliği ile Avrupa kıtasından çok daha yüksek bir coğrafyaya sahiptir 🏔️",
-            "🌿 Ülkemiz dünyadaki fındık üretiminin yaklaşık yüzde 70'ini tek başına karşılamaktadır 🌰"
+            "🌍 İstanbul dünyada iki kıta üzerine kurulmuş tek metropoldür 🌉"
         ];
 
         const ataturkBilgileri = [
             "✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur 🇹🇷",
-            "📚 Atatürk hayatı boyunca 4000'den fazla kitap okumuştur ve kendisi aynı zamanda bir Geometri kitabı yazmıştır 📐",
-            "🦅 Dünya tarihindeki en büyük liderlerden biri olan Atatürk barışçıl politikaları nedeniyle Nobel Barış Ödülü'ne aday gösterilmiştir 🌍",
-            "🌸 Atatürk doğayı çok severdi Yalova'daki yürüyen köşkün yanındaki çınar ağacının dalı kesilmesin diye köşkü raylar üzerinde kaydırtmıştır 🌳",
-            "🎓 Eğitime büyük önem veren Atatürk millet mekteplerini açarak okuma yazma oranını hızla yükseltmiştir 📝"
+            "📚 Atatürk hayatı boyunca 4000'den fazla kitap okumuştur ve kendisi aynı zamanda bir Geometri kitabı yazmıştır 📐"
         ];
 
         const egitimBilgileri = [
             "📝 Düzenli ve planlı ders çalışmak bilgilerin kalıcı hafızaya geçmesini sağlar 🧠",
-            "⏰ Pomodoro tekniği (25 dakika ders 5 dakika mola) odaklanmayı en üst seviyeye çıkaran harika bir yöntemdir ⏱️",
-            "📖 Kitap okumak kelime haznenizi geliştirir ve sorulardaki mantık muhakeme hızınızı artırır 🚀",
-            "🎯 Başarılı olmanın sırrı pes etmemektir Yanlış yaptığınız her soru aslında yeni bir şey öğrenme fırsatıdır  ✅",
-            "🎓 Öğrenilen bir konuyu başkasına anlatmak o konuyu yüzde 90 oranında daha iyi kavramınızı sağlar 🎓"
+            "⏰ Pomodoro tekniği odaklanmayı en üst seviyeye çıkaran harika bir yöntemdir ⏱️"
         ];
 
         const sakalar = [
             "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
-            "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳",
-            "🥶 Hava o kadar soğuk ki dışarıdaki köpekler bile kangal sucuk gibi birbirine sarılmış! 🐕",
-            "🤠 En kibar sucuk hangisidir? Tabii ki 'Efendim' sucukları! 🥩",
-            "💻 Bir yazılımcı mangal yaparken ne söyler? 'Kodları yazdım, şimdi sucukları compile ediyorum!' 🔥"
+            "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳"
         ];
 
-        if (text.includes('atatürk') || text.includes('ataturk') || text.includes('gazi mustafa kemal')) {
+        if (text.includes('atatürk') || text.includes('ataturk')) {
             appendMessage(ataturkBilgileri[Math.floor(Math.random() * ataturkBilgileri.length)], 'bot-message');
             return;
         }
 
-        if (text.includes('türkiye') || text.includes('turkiye') || text.includes('ülkemiz')) {
+        if (text.includes('türkiye') || text.includes('turkiye')) {
             appendMessage(turkiyeBilgileri[Math.floor(Math.random() * turkiyeBilgileri.length)], 'bot-message');
             return;
         }
 
-        if (text.includes('hayvan') || text.includes('aslan') || text.includes('kedi') || text.includes('köpek')) {
+        if (text.includes('hayvan') || text.includes('aslan') || text.includes('kedi')) {
             appendMessage(hayvanBilgileri[Math.floor(Math.random() * hayvanBilgileri.length)], 'bot-message');
             return;
         }
 
-        if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders') || text.includes('çalışmak') || text.includes('okul')) {
+        if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders')) {
             appendMessage(egitimBilgileri[Math.floor(Math.random() * egitimBilgileri.length)], 'bot-message');
             return;
         }
 
-        if (text.includes('şaka') || text.includes('saka') || text.includes('komik') || text.includes('sucuk')) {
+        if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
             appendMessage(sakalar[Math.floor(Math.random() * sakalar.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('bilgi') || text.includes('biliyor musun')) {
-            const tumBilgiler = [...hayvanBilgileri, ...turkiyeBilgileri, ...ataturkBilgileri, ...egitimBilgileri];
-            appendMessage("💡 İşte senin için harika bir bilgi: " + tumBilgiler[Math.floor(Math.random() * tumBilgiler.length)], 'bot-message');
             return;
         }
 
@@ -302,50 +318,19 @@
                     return;
                 }
             } catch (e) {
-                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim Lütfen sayıları ve işlem işaretlerini kontrol ederek tekrar yazın", 'bot-message');
+                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
                 return;
             }
         }
 
-        if (text === 'merhaba' || text === 'merhabalar' || text === 'selam' || text === 'selamlar') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Nasıl yardımcı olabilirim? ✨", 'bot-message');
+        if (text === 'merhaba' || text === 'selam') {
+            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights, camera, action!", 'bot-message');
             return;
         }
 
-        if (text === 'sa' || text === 's.a' || text === 'selamun aleykum' || text === 'selamün aleyküm') {
-            appendMessage("🤝 Aleyküm selam Hoş geldiniz size nasıl yardımcı olabilirim? 🌸", 'bot-message');
-            return;
-        }
-
-        if (text.includes('nasılsın') || text.includes('nasilsin') || text.includes('naber')) {
-            appendMessage("⚙️ Teşekkür ederim sistemlerim kararlı ve gayet iyi çalışıyor Siz nasılsınız? 😊 Size nasıl yardımcı olabilirim?", 'bot-message');
-            return;
-        }
-
-        if (text.includes('iyiyim') || text.includes('iyiym') || text.includes('iyi ol')) {
-            appendMessage("👍 İyi olmanıza çok sevindim Sorularınız varsa yanıtlamaya hazırım 📝", 'bot-message');
-            return;
-        }
-
-        if (text.includes('teşekkür') || text.includes('tesekkur') || text.includes('sağ ol') || text.includes('sag ol')) {
-            appendMessage("🙏 Rica ederim görevimi en iyi şekilde yapmaya çalışıyorum Başka bir sorunuz var mı? 💫", 'bot-message');
-            return;
-        }
-
-        if (text.includes('kim yaptı') || text.includes('yapımcın kim') || text.includes('kim yazdı') || text.includes('kimin projesi')) {
-            appendMessage("💻 Ben, HASAN5847 tarafından geliştirilmiş ve kodlanmış bir yapay zeka asistanıyım 🚀", 'bot-message');
-            return;
-        }
-
-        if (text.includes('ne yapıyorsun') || text.includes('ne yapiyorsun') || text.includes('görevin ne')) {
-            appendMessage("🔍 Kullanıcıların sorduğu soruları yanıtlamak genel kültür bilgileri vermek, fotoğraflar getirmek ve hesaplamalar yapmak üzere çalışıyorum ⚡", 'bot-message');
-            return;
-        }
-
-        appendMessage("❓ Yazdığınız ifadeyi tam olarak anlayamadım Bana Atatürk Türkiye hayvanlar eğitim veya 'kedi fotoğrafı' gibi görseller sorabilir bir matematik işlemi yazabilir veya 'şaka yap' diyebilirsiniz 📂", 'bot-message');
+        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
     }
 </script>
 
 </body>
-    </html>
-    
+</html>
