@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sucuk AI - Gelişmiş Asistan</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
@@ -22,6 +25,7 @@
             padding: 15px 25px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
         .site-title {
             font-size: 18px;
@@ -81,7 +85,6 @@
             background-color: transparent;
             position: relative;
             z-index: 1;
-            box-sizing: border-box;
         }
         .message {
             max-width: 85%;
@@ -117,19 +120,19 @@
             display: block;
         }
         .chat-input-area {
-            padding: 20px;
+            padding: 15px 20px;
             background-color: #ffffff;
             border-top: 1px solid #e0e0e0;
-            position: sticky;
-            bottom: 0;
-            z-index: 2;
+            flex-shrink: 0;
         }
         .input-wrapper {
             display: flex;
+            align-items: center;
+            width: 100%;
         }
         .chat-input {
             flex: 1;
-            padding: 15px;
+            padding: 15px 20px;
             border: 1px solid #ffccd0;
             background-color: #fff5f5;
             color: #333333;
@@ -137,6 +140,7 @@
             font-size: 16px;
             outline: none;
             transition: all 0.2s;
+            min-width: 0;
         }
         .chat-input:focus {
             border-color: #ff4757;
@@ -148,12 +152,15 @@
             color: white;
             border: none;
             padding: 0 25px;
+            height: 50px;
             margin-left: 12px;
             border-radius: 24px;
             cursor: pointer;
             font-weight: 600;
             font-size: 16px;
             transition: background 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         .send-btn:hover {
             background-color: #e84118;
@@ -252,12 +259,12 @@
         "giresun": "🌰 Giresun fındığın anavatanıdır Dünyanın en kaliteli fındıkları burada yetişir Giresun Adası meşhurdur Plaka kodu 28 dir",
         "gumushane": "👑 Gümüşhane pestil köme Karaca Mağarası ve tarihi Tomara Şelalesi ile ünlüdür Plaka kodu 29 dur",
         "hakkari": "🏔️ Hakkari Cilo Dağları buzulları ve el değmemiş dik coğrafyasıyla bilinen sınır şehrimizdir Plaka kodu 30 dur",
-        "hatay": "🍲 Hatay künefesi tepsikebabı ve mozaik müzesiyle köklü bir medeniyet and gastronomi kentidir Plaka kodu 31 dir",
+        "hatay": "🍲 Hatay künefesi tepsikebabı ve mozaik müzesiyle köklü bir medeniyet ve gastronomi kentidir Plaka kodu 31 dir",
         "isparta": "🌹 Isparta dünyaca ünlü gül bahçeleri halıları ve lavanta köyleri ile bilinen Akdeniz ilidir Plaka kodu 32 dir",
         "mersin": "🌴 Mersin tantunisi cezeryesi Kızkalesi ve devasa limanıyla Akdeniz in incisidir Plaka kodu 33 tür",
         "istanbul": "🌉 İstanbul iki kıtayı birleştiren tarihi sarayları camileri ve boğazı ile dünyanın en önemli metropollerinden biridir Plaka kodu 34 tür",
         "izmir": "🕊️ İzmir Ege nin incisidir Kordon boyu saat kulesi boyozu ve Efes Antik Kenti ile bilinir Plaka kodu 35 tir",
-        "kars": "🧀 Kars gravyer peyniri Ani Harabeleri and kışın donan Çıldır Gölü ile ünlüdür Plaka kodu 36 dır",
+        "kars": "🧀 Kars gravyer peyniri Ani Harabeleri ve kışın donan Çıldır Gölü ile ünlüdür Plaka kodu 36 dır",
         "kastamonu": "🌲 Kastamonu sarımsağı kanyonları tarihi konakları ve Ilgaz Dağı ile meşhurdur Plaka kodu 37 dir",
         "kayseri": "🥟 Kayseri mantısı pastırması sucuğu ve Erciyes Dağı ile bilinen İç Anadolu sanayi şehridir Plaka kodu 38 dir",
         "kirklareli": "🍇 Kırklareli Trakya da yer alır Dupnisa Mağarası ve iğneada longoz ormanları ile doğa harikasıdır Plaka kodu 39 dur",
@@ -265,7 +272,7 @@
         "kocaeli": "🏭 Kocaeli sanayinin kalbidir Pişmaniyesi ve Kartepe kayak merkezi meşhurdur Plaka kodu 41 dir",
         "konya": "🕌 Konya Mevlana Celaleddin Rumi türbesi etli ekmeği ve Türkiye nin en büyük yüzölçümüne sahip ili olmasıyla bilinir Plaka kodu 42 dir",
         "kutahya": "🏺 Kütahya porselenleri çinileri ve tarihi Frig Vadisi ile bilinen ege şehridir Plaka kodu 43 tür",
-        "malatya": "🍑 Malatya dünya kayısı üretiminin merkezidir Plaka kodu 44 tru",
+        "malatya": "🍑 Malatya dünya kayısı üretiminin merkezidir Plaka kodu 44 tür",
         "manisa": "🍇 Manisa sultaniye üzümü mesir macunu ve Spil Dağı ile meşhurdur Plaka kodu 45 tir",
         "kahramanmaras": "🍦 Kahramanmaraş dövme dondurması biberi ve tarihi kalesi ile ünlüdür Plaka kodu 46 dır",
         "mardin": "🗿 Mardin taş evleri tarihi dokusu ve gümüş telkari sanatı ile açık hava müzesi gibidir Plaka kodu 47 dir",
@@ -276,7 +283,7 @@
         "ordu": "🌲 Ordu fındığı yaylaları ve Boztepe teleferiği ile Karadeniz in en güzel kıyı şehirlerindendir Plaka kodu 52 dir",
         "rize": "🌱 Rize çayın başkentidir Ayder Yaylası fırtına deresi ve kaçkar dağları ile ünlüdür Plaka kodu 53 tür",
         "sakarya": "🌿 Sakarya ıslama köftesi kabak tatlısı ve Sapanca Gölü ile bilinir Plaka kodu 54 tür",
-        "samsun": "🇹🇷 Samsun Mustafa Kemal Atatürk ün 19 Maus 1919 da kurtuluş mücadelesini başlattığı meşale şehrimizdir Plaka kodu 55 tir",
+        "samsun": "🇹🇷 Samsun Mustafa Kemal Atatürk ün 19 Mayıs 1919 da kurtuluş mücadelesini başlattığı meşale şehrimizdir Plaka kodu 55 tir",
         "siirt": "🥜 Siirt fıstığı büryan kebabı ve battaniyesi ile meşhurdur Plaka kodu 56 dır",
         "sinop": "⚓ Sinop Türkiye nin en kuzey noktası olan İnceburun a ve tek doğal limanına sahip sakin şehirdir Plaka kodu 57 dir",
         "sivas": "🏰 Sivas Divriği Ulu Camii Kangal köpeği ve tarihi medreseleri ile ünlüdür Plaka kodu 58 dir",
@@ -327,5 +334,4 @@
         "penguen": "🐧 Penguenler uçamayan ama deniz altında adeta uçarcasına çok hızlı yüzen kuşlardır Eşlerine çok sadıktırlar",
         "flamingo": "🦩 Flamingolar tüylerindeki pembe rengi yedikleri karides ve yosunlardan alırlar Genelde tek ayak üzerinde dururlar",
         "deve": "🐫 Develer hörgüçlerinde su değil yağ depolarlar Bu sayede çöl şartlarında günlerce susuz ve yemeksiz ilerleyebilirler",
-        "kanguru": "🦘 Kangurular geri geri yürüyemezler Kuyruklarını adeta üçüncü bir bacak gibi denge kurmak için kullanırlar",
-        "koala": "🐨 Koalalar okaliptüs yaprakları ile beslenirler Bu yaprakların sindirimi zor olduğu için enerjilerini korumak amacıyla
+        "kanguru": "🦘 Kangurular geri geri yürüyemezler Kuyruklarını adeta üçüncü bir
