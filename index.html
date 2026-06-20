@@ -3,219 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUCUK AI</title>
+    <title>Sucuk AI - Gelişmiş Asistan</title>
     <style>
         body {
-            background: linear-gradient(to bottom, #ff4747 50%, #ffffff 50%);
-            color: #ff6b6b;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
         }
-        .container {
-            text-align: center;
-            border: 3px solid #ff4747;
-            padding: 25px;
-            border-radius: 15px;
-            background: #2b1616;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-        .logo-container {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 2px solid #ff4747;
-            background-color: #1a0f0f;
+        .header-area {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(255, 71, 71, 0.5);
+            padding: 15px 25px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
         }
-        .logo-text {
-            color: #ff4747;
+        .site-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .logo-box {
+            background-color: #ff4757;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
             font-weight: bold;
-            font-size: 11px;
-            text-transform: uppercase;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        h1 { font-size: 28px; margin-top: 10px; margin-bottom: 5px; color: #ff4747; text-align: left; padding-left: 5px; }
-        .subtitle { color: #ffa6a6; font-size: 13px; margin-bottom: 25px; text-align: left; padding-left: 5px; }
-        
-        input[type="text"] {
-            width: 96%; 
-            padding: 20px 10px; 
-            border: 2px solid #5c2e2e;
-            background: #1a0f0f; 
-            color: #ffa6a6; 
-            font-size: 20px;
-            border-radius: 10px; 
-            outline: none; 
-            text-align: center; 
-            margin-bottom: 15px;
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #ffffff;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
             box-sizing: border-box;
         }
-        input[type="text"]:focus {
-            border-color: #ff4747;
+        .message {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        button {
-            padding: 15px 30px; background: #ff4747; color: white;
-            border: none; font-size: 18px; font-weight: bold; border-radius: 8px; width: 96%;
+        .user-message {
+            background-color: #ff4757;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .bot-message {
+            background-color: #f1f3f5;
+            color: #212529;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .chat-input-area {
+            padding: 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 0;
+        }
+        .input-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ffccd0;
+            background-color: #fff5f5;
+            color: #333333;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .chat-input:focus {
+            border-color: #ff4757;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
+        }
+        .send-btn {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            margin-left: 12px;
+            border-radius: 24px;
             cursor: pointer;
-            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.2s;
         }
-        button:active {
-            background: #cc3939;
-        }
-        .output-box {
-            margin-top: 5px; border: 1px dashed #5c2e2e; padding: 15px;
-            background: #1a0f0f; min-height: 50px; border-radius: 8px;
-            font-size: 18px; color: #ffb3b3; text-align: left;
-        }
-        .emoji-alani {
-            font-size: 55px;
-            margin-bottom: 10px;
-            display: none;
-            text-align: center;
+        .send-btn:hover {
+            background-color: #e84118;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="logo-container">
-        <span class="logo-text">SUCUK</span>
-    </div>
-    
-    <h1>SUCUK AI</h1>
-    <div class="subtitle">Merkezi Yapay Zeka Sistemi</div>
-    
-    <input type="text" id="soruKutusu" placeholder="Sorunuzu buraya yazın..." autocomplete="off">
-    <br>
-    <button id="analizButonu">SORUYU ANALİZ ET</button>
-    
-    <div class="output-box" id="cevapEkrani">
-        <div id="durumEmoji" class="emoji-alani"></div>
-        <span id="yaziAlani">> Sucuk AI online...</span>
+<div class="header-area">
+    <div class="site-title">Sucuk AI Asistanı</div>
+    <div class="logo-box">🌭 SUCUK AI</div>
+</div>
+
+<div id="chatMessages" class="chat-messages">
+    <div class="message bot-message">👋 Merhaba, ben Sucuk AI Asistanı. Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir, sorularınızı yanıtlayabilir or isterseniz en lezzetli sucuk şakalarını yapabilirim! 🎯</div>
+</div>
+
+<div class="chat-input-area">
+    <div class="input-wrapper">
+        <input type="text" id="userInput" class="chat-input" placeholder="Bir mesaj yazın, işlem girin veya 'şaka yap' deyin..." onkeypress="handleKeyPress(event)">
+        <button class="send-btn" onclick="sendMessage()">Gönder</button>
     </div>
 </div>
 
 <script>
-    let soruSayisi = 0;
-
-    const genelCevaplar = [
-        "Bu talebinizi merkezi veri tabanımda analiz ettim ve onayladım",
-        "İstediğiniz şey üzerinde şu an veri tabanımda derinlemesine çalışıyorum",
-        "Sistem bu isteğinizi yerine getirmek için hazır bekliyor",
-        "Analiz tamamlandı isteğiniz yapay zeka algoritmalarıma çok uygun",
-        "Harika bir soru Sucuk sunucuları şu an bu konuyu inceliyor",
-        "Verileri taradım bu isteğinizi gerçekleştirmek çok kolay",
-        "Merkezi yapay zeka sistemi bu mesajınızı başarıyla kaydetti"
-    ];
-
-    function otomatikCevapla() {
-        const soruKutusu = document.getElementById("soruKutusu");
-        const soru = soruKutusu.value.trim();
-        if(soru === "") return;
-
-        let nihaiCevap = "";
-        let secilenEmoji = "";
-
-        const kucukSoru = soru.toLowerCase();
-        const temizSoru = soru.replace(/\s+/g, '');
-
-        if (kucukSoru.includes("eylül") || kucukSoru.includes("eylul")) {
-            nihaiCevap = "Eylül malın teki";
-            secilenEmoji = "🤪";
-        } 
-        else if (temizSoru.match(/^(\d+)\+(\d+)$/)) {
-            const eslesme = temizSoru.match(/^(\d+)\+(\d+)$/);
-            const toplam = parseInt(eslesme[1]) + parseInt(eslesme[2]);
-            nihaiCevap = "Bu işlemin sonucu: " + toplam;
-            secilenEmoji = "🤓";
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
-        else if (temizSoru.match(/^(\d+)[\*x](\d+)$/)) {
-            const eslesme = temizSoru.match(/^(\d+)[\*x](\d+)$/);
-            const carpi = parseInt(eslesme[1]) * parseInt(eslesme[2]);
-            nihaiCevap = "Çarpma işleminin sonucu: " + carpi;
-            secilenEmoji = "🤓";
-        }
-        else if (temizSoru.match(/^(\d+)\/(\d+)$/)) {
-            const eslesme = temizSoru.match(/^(\d+)\/(\d+)$/);
-            const sayi2 = parseInt(eslesme[2]);
-            if (sayi2 === 0) {
-                nihaiCevap = "Bir sayı sıfıra bölünemez";
-                secilenEmoji = "❌";
-            } else {
-                const bolum = parseInt(eslesme[1]) / sayi2;
-                nihaiCevap = "Bölme işleminin sonucu: " + bolum;
-                secilenEmoji = "🤓";
-            }
-        }
-        else {
-            soruSayisi++;
-            if (soruSayisi === 1) {
-                const rastgeleIndis = Math.floor(Math.random() * genelCevaplar.length);
-                nihaiCevap = genelCevaplar[rastgeleIndis];
-                secilenEmoji = "😎"; 
-            } else if (soruSayisi === 2) {
-                nihaiCevap = "Bu sorunun cevabını bilmiyorum lütfen Hasan'a sor";
-                secilenEmoji = "🤔"; 
-            } else if (soruSayisi === 3) {
-                nihaiCevap = "Bağlantı koptu site kapandı";
-                secilenEmoji = "🤪"; 
-            } else {
-                nihaiCevap = "Sistem tamamen kapandı...";
-                secilenEmoji = "❌";
-            }
-        }
-
-        const yaziAlani = document.getElementById("yaziAlani");
-        const emojiKutusu = document.getElementById("durumEmoji");
-        
-        emojiKutusu.style.display = "none";
-        yaziAlani.innerText = "> Soru sunucuya iletildi Analiz ediliyor...";
-        
-        setTimeout(() => {
-            yaziAlani.innerText = "> ";
-            
-            if (secilenEmoji) {
-                emojiKutusu.innerText = secilenEmoji;
-                emojiKutusu.style.display = "block";
-            }
-
-            let i = 0;
-            function yaz() {
-                if (i < nihaiCevap.length) {
-                    yaziAlani.innerText += nihaiCevap.charAt(i);
-                    i++;
-                    setTimeout(yaz, 50);
-                } else {
-                    soruKutusu.value = "";
-                }
-            }
-            yaz();
-        }, 1500);
     }
 
-    document.getElementById("analizButonu").addEventListener("click", otomatikCevapla);
+    function sendMessage() {
+        const inputElement = document.getElementById('userInput');
+        const messageText = inputElement.value.trim();
+        
+        if (messageText === '') return;
 
-    document.getElementById("soruKutusu").addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            otomatikCevapla();
+        appendMessage(messageText, 'user-message');
+        inputElement.value = '';
+
+        setTimeout(() => {
+            const botResponse = getBotResponse(messageText);
+            appendMessage(botResponse, 'bot-message');
+        }, 400);
+    }
+
+    function appendMessage(text, className) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${className}`;
+        messageDiv.innerText = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+        const text = input.toLowerCase().trim();
+
+        if (text.includes('şaka') || text.includes('saka') || text.includes('komik') || text.includes('sucuk')) {
+            const sakalar = [
+                "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
+                "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳",
+                "🥶 Hava o kadar soğuk ki dışarıdaki köpekler bile kangal sucuk gibi birbirine sarılmış! 🐕",
+                "🤠 En kibar sucuk hangisidir? Tabii ki 'Efendim' sucukları! 🥩",
+                "💻 Bir yazılımcı mangal yaparken ne söyler? 'Kodları yazdım, şimdi sucukları compile ediyorum!' 🔥",
+                "🧐 Sucuk neden okula gitmiş? Çünkü tavanın en akıllısı olmak istiyormuş! 🎓",
+                "⚡ En hızlı pişen sucuk hangisidir? Işık hızındaki 'Lazerli' sucuk! 🛸"
+            ];
+            return sakalar[Math.floor(Math.random() * sakalar.length)];
         }
-    });
+
+        const mathPattern = /^[0-9\s\+\-\*\/\.\(\)]+$/;
+        let cleanMathInput = input.replace(/x/gi, '*');
+
+        if (mathPattern.test(cleanMathInput)) {
+            try {
+                const temizIslem = cleanMathInput.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
+                const sonuc = Function('"use strict";return (' + temizIslem + ')')();
+                if (sonuc !== undefined && !isNaN(sonuc)) {
+                    return `📊 İşleminizin sonucu: ${sonuc} ✅`;
+                }
+            } catch (e) {
+                return "⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim. Lütfen sayıları ve işlem işaretlerini kontrol ederek tekrar yazın.";
+            }
+        }
+
+        if (text === 'merhaba' || text === 'merhabalar' || text === 'selam' || text === 'selamlar') {
+            return "👋 Merhaba, size yardımcı olmaktan mutluluk duyarım. Nasıl yardımcı olabilirim? ✨";
+        }
+
+        if (text === 'sa' || text === 's.a' || text === 'selamun aleykum' || text === 'selamün aleyküm') {
+            return "🤝 Aleyküm selam. Hoş geldiniz, size nasıl yardımcı olabilirim? 🌸";
+        }
+
+        if (text.includes('nasılsın') || text.includes('nasilsin') || text.includes('naber')) {
+            return "⚙️ Teşekkür ederim, sistemlerim kararlı ve gayet iyi çalışıyor. Siz nasılsınız? 😊 Size nasıl yardımcı olabilirim?";
+        }
+
+        if (text.includes('iyiyim') || text.includes('iyiym') || text.includes('iyi ol')) {
+            return "👍 İyi olmanıza çok sevindim. Sorularınız varsa yanıtlamaya hazırım. 📝";
+        }
+
+        if (text.includes('teşekkür') || text.includes('tesekkur') || text.includes('sağ ol') || text.includes('sag ol')) {
+            return "🙏 Rica ederim, görevimi en iyi şekilde yapmaya çalışıyorum. Başka bir sorunuz var mı? 💫";
+        }
+
+        if (text.includes('kim yaptı') || text.includes('yapımcın kim') || text.includes('kim yazdı') || text.includes('kimin projesi')) {
+            return "💻 Ben, HASAN5847 tarafından geliştirilmiş ve kodlanmış bir yapay zeka asistanıyım. 🚀";
+        }
+
+        if (text.includes('ne yapıyorsun') || text.includes('ne yapiyorsun') || text.includes('görevin ne')) {
+            return "🔍 Kullanıcıların sorduğu soruları yanıtlamak, sucuk şakaları yapmak ve matematiksel hesaplamaları yapmak üzere sistemlerimi çalıştırıyorum. ⚡";
+        }
+
+        return "❓ Yazdığınız ifadeyi tam olarak anlayamadım. Bana bir matematik işlemi (örneğin: 45 + 15) yazabilir, 'şaka yap' diyebilir veya öğrenmek istediğiniz bir konuyu sorabilirsiniz. 📂";
+    }
 </script>
+
 </body>
 </html>
