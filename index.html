@@ -2,11 +2,12 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sucuk AI - Gelişmiş Asistan</title>
     <style>
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,6 +18,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
         .header-area {
             display: flex;
@@ -161,6 +163,8 @@
             transition: background 0.2s;
             white-space: nowrap;
             flex-shrink: 0;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .send-btn:hover {
             background-color: #e84118;
@@ -188,7 +192,7 @@
 <div class="chat-input-area">
     <div class="input-wrapper">
         <input type="text" id="userInput" class="chat-input" placeholder="Bir il, hayvan sorun veya görsel isteyin..." onkeypress="handleKeyPress(event)">
-        <button class="send-btn" onclick="sendMessage()">Gönder</button>
+        <button class="send-btn" id="sendBtn">Gönder</button>
     </div>
 </div>
 
@@ -212,6 +216,17 @@
             handleBotResponse(messageText);
         }, 400);
     }
+
+    // Mobil tıklama sorununu çözmek için ekstra dinleyici ekledik
+    const btn = document.getElementById('sendBtn');
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
+    btn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
 
     function appendMessage(text, className, htmlContent = null) {
         const chatMessages = document.getElementById('chatMessages');
@@ -330,8 +345,4 @@
         "kurt": "🐺 Kurtlar çok disiplinli sürüler halinde yaşarlar Uluyarak diğer sürülere sınırlarını bildirir ve kendi üyeleriyle iletişim kurarlar",
         "aygiri": "🦛 Su aygırları devasa cüsselerine rağmen karada saatte 30 kilometre hızla koşabilirler",
         "ayi": "🐻 Ayılar çok güçlü koku alma duyusuna sahiptir Kış uykusuna yatarak aylarca hiçbir şey yemeden hayatta kalabilirler",
-        "maymun": "🐒 Maymunlar problem çözme yetenekleri yüksek araç gereç kullanabilen çok zeki canlılardır",
-        "penguen": "🐧 Penguenler uçamayan ama deniz altında adeta uçarcasına çok hızlı yüzen kuşlardır Eşlerine çok sadıktırlar",
-        "flamingo": "🦩 Flamingolar tüylerindeki pembe rengi yedikleri karides ve yosunlardan alırlar Genelde tek ayak üzerinde dururlar",
-        "deve": "🐫 Develer hörgüçlerinde su değil yağ depolarlar Bu sayede çöl şartlarında günlerce susuz ve yemeksiz ilerleyebilirler",
-        "kanguru": "🦘 Kangurular geri geri yürüyemezler Kuyruklarını adeta üçüncü bir
+        "maymun": "🐒 Maymunlar problem çözme yetenekleri yüksek araç gereç kullanabilen 
