@@ -221,7 +221,6 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // GENİŞLETİLMİŞ COĞRAFYA VE İLLER VERİ BANKASI
     const illerHafizasi = {
         "adana": "🌾 Adana Akdeniz Bölgesi nde yer alır Kebap şalgam ve pamuğu ile meşhurdur Plaka kodu 01 dir",
         "adiyaman": "⛰️ Adıyaman Güneydoğu Anadolu da bulunur Nemrut Dağı Milli Parkı ve dev heykel başlarıyla dünya çapında tanınır Plaka kodu 02 dir",
@@ -240,7 +239,7 @@
         "burdur": "💎 Burdur Akdeniz dedir Türkiye nin Maldivleri olarak anılan Salda Gölü bu ilimizdedir Plaka kodu 15 tir",
         "bursa": "🟢 Bursa Osmanlı nın ilk başkentlerindendir Uludağ kayak merkezi iskender kebabı ve ipeği ünlüdür Plaka kodu 16 dır",
         "canakkale": "🏹 Çanakkale tarihi destanların yazıldığı Troya Antik Kenti ve Şehitler Abidesi nin bulunduğu kahraman şehrimizdir Plaka kodu 17 dir",
-        "cankiri": "🧂 Çankırı İç Anadolu dadır Dünyanın en büyük tuz mağaralarından birine ev sahipliği yapar Plaka kodu 18 dir",
+        "cankiri": "♣️ Çankırı İç Anadolu dadır Dünyanın en büyük tuz mağaralarından birine ev sahipliği yapar Plaka kodu 18 dir",
         "corum": "🗿 Çorum Karadeniz Bölgesi nin iç kısmındadır Hititlerin başkenti Hattuşaş buradadır Leblebisi ünlüdür Plaka kodu 19 dur",
         "denizli": "🦢 Denizli Ege Bölgesi ndedir Pamukkale travertenleri ve dünyaca ünlü Denizli horozu ile tanınır Plaka kodu 20 dir",
         "diyarbakir": "🍉 Diyarbakır tarihi surları Hevsel bahçeleri ve dev karpuzları ile bilinen kültür şehridir Plaka kodu 21 dir",
@@ -249,11 +248,11 @@
         "erzincan": "🧀 Erzincan tulum peyniri bakır işlemeciliği ve Girlevik Şelalesi ile meşhur Doğu Anadolu ilimizdir Plaka kodu 24 tür",
         "erzurum": "⛷️ Erzurum Palandöken kayak merkezi cağ kebabı ve çifte minareli medresesi ile ünlüdür Plaka kodu 25 tir",
         "eskisehir": "🎓 Eskişehir öğrenci kenti olarak bilinir Porsuk Çayı lüle taşı ve çiböreği meşhurdur Plaka kodu 26 dır",
-        "gaziantep": "baklava Antep fıstığı ve zengin mutfak kültürüyle UNESCO tescilli gastronomi şehrimizdir Plaka kodu 27 dir",
+        "gaziantep": "🥞 Gaziantep baklava Antep fıstığı ve zengin mutfak kültürüyle UNESCO tescilli gastronomi şehrimizdir Plaka kodu 27 dir",
         "giresun": "🌰 Giresun fındığın anavatanıdır Dünyanın en kaliteli fındıkları burada yetişir Giresun Adası meşhurdur Plaka kodu 28 dir",
         "gumushane": "👑 Gümüşhane pestil köme Karaca Mağarası ve tarihi Tomara Şelalesi ile ünlüdür Plaka kodu 29 dur",
         "hakkari": "🏔️ Hakkari Cilo Dağları buzulları ve el değmemiş dik coğrafyasıyla bilinen sınır şehrimizdir Plaka kodu 30 dur",
-        "hatay": "künefesi tepsikebabı ve mozaik müzesiyle köklü bir medeniyet ve gastronomi kentidir Plaka kodu 31 dir",
+        "hatay": "🍲 Hatay künefesi tepsikebabı ve mozaik müzesiyle köklü bir medeniyet ve gastronomi kentidir Plaka kodu 31 dir",
         "isparta": "🌹 Isparta dünyaca ünlü gül bahçeleri halıları ve lavanta köyleri ile bilinen Akdeniz ilidir Plaka kodu 32 dir",
         "mersin": "🌴 Mersin tantunisi cezeryesi Kızkalesi ve devasa limanıyla Akdeniz in incisidir Plaka kodu 33 tür",
         "istanbul": "🌉 İstanbul iki kıtayı birleştiren tarihi sarayları camileri ve boğazı ile dünyanın en önemli metropollerinden biridir Plaka kodu 34 tür",
@@ -296,7 +295,7 @@
         "kirikkale": "🔧 Kırıkkale silah sanayisinin merkezidir Plaka kodu 71 dir",
         "batman": "🛢️ Batman petrol rafinerisi ve tarihi Hasankeyf antik kenti ile bilinir Plaka kodu 72 dir",
         "sirnak": "⛰️ Şırnak Cudi Dağı ve Kasrik Boğazı ile tanınır Plaka kodu 73 tür",
-        "bartin": "🌲 Bartın Amasra ilçesi ve tarihi ahşap evleri ile meşhurdur Plaka kodu 74 tür",
+        "bartin": "🌲 Bartın Amasra ilçesi ve tarihi ahşap evleri ile meşhurdur Plaka kodu 74 tir",
         "ardahan": "❄️ Ardahan Çıldır Gölü ve kaşar peyniri ile ünlüdür Plaka kodu 75 tir",
         "igdir": "🍎 Iğdır Türkiye nin en doğu ucudur kayısısı meşhurdur Plaka kodu 76 dır",
         "yalova": "🌳 Yalova termal kaplıcaları ve Atatürk ün Yürüyen Köşk ü ile bilinir Plaka kodu 77 dir",
@@ -306,22 +305,19 @@
         "duzce": "🍃 Düzce fındığı şelaleleri ve rafting alanları ile bilinir Plaka kodu 81 dir"
     };
 
-    // GENİŞLETİLMİŞ HAYVANLAR VERİ BANKASI
-    const hayvanlarHafizasi = {
+    const haystackHafizasi = {
         "kedi": "🐱 Kediler günün yaklaşık 12-16 saatini uyuyarak geçirirler Harika refleksleri ve çok keskin görüş yetenekleri vardır",
         "kopek": "🐕 Köpekler insanların en sadık dostlarıdır Koku alma duyuları bir insandan tam 10 bin ila 100 bin kat daha güçlüdür",
         "aslan": "🦁 Aslanlar ormanların kralı olarak bilinir Gurur adı verilen büyük aile grupları halinde yaşarlar ve kükremeleri 8 kilometre uzaktan duyulabilir",
         "kaplan": "🐯 Kaplanlar dünyadaki en büyük kedigillerdir Harika yüzücülerdir ve her kaplanın kürkündeki çizgiler tıpkı insan parmak izi gibi tamamen benzersizdir",
         "leopar": "🐆 Leoparlar ağaçlara tırmanma konusunda ustadırlar Avlarını diğer yırtıcılardan korumak için genellikle ağaç dallarına taşırlar",
         "cita": "🐆 Çitalar kara dünyasının en hızlı canlısıdır Sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler",
-        "aslan": "🦁 Ormanların kralı aslanların kükremesi tam 8 kilometre mesafeden rahatlıkla duyulabilir",
         "fil": "🐘 Filler dünyadaki en büyük kara memelisidir Hortumlarında yaklaşık 40 bin kas bulunur ve birbirleriyle çok uzak mesafelerden infrasonik seslerle haberleşebilirler",
         "balina": "🐋 Mavi balinalar dünya tarihinde yaşamış en büyük canlıdır Kalpleri küçük bir araba boyutundadır ve sadece dili bir filin ağırlığına eşittir",
         "yunus": "🐬 Yunuslar son derece zeki canlılardır Uyurken beyinlerinin sadece bir yarısını kapatırlar, diğer yarısı tehlikelere karşı açık kalır",
         "kopekbaligi": "🦈 Köpekbalıklarının iskeletleri kemikten değil kıkırdaktan oluşur Yaşamları boyunca binlerce kez diş değiştirebilirler",
         "kartal": "🦅 Kartallar muazzam bir görme yeteneğine sahiptir İnsanlardan 4-5 kat daha net görebilirler ve havada uçarken kilometrelerce uzaktaki avlarını saptayabilirler",
         "baykus": "🦉 Baykuşlar gözlerini hareket ettiremezler Ancak kafalarını tam 270 derece döndürerek arkalarını görebilirler Avlarını tamamen sessiz uçarak yakalarlar",
-        "aygiri": "🦛 Su aygırları nehirlerde yaşar Çok agresif canlılardır ve sütleri pembe renktedir",
         "timsah": "🐊 Timsahlar avlarını yerken gözyaşı bezleri uyarılır Bu yüzden ortaya çıkan duruma timsah gözyaşları denir",
         "zurafa": "🦒 Zürafalar dünyanın en uzun canlılarıdır Boyunlarında tıpkı insanlar gibi sadece 7 adet omur kemiği bulunur Dilleri ise siyah-mor renktedir",
         "kurt": "🐺 Kurtlar çok disiplinli sürüler halinde yaşarlar Uluyarak diğer sürülere sınırlarını bildirir ve kendi üyeleriyle iletişim kurarlar",
@@ -330,4 +326,6 @@
         "maymun": "🐒 Maymunlar problem çözme yetenekleri yüksek araç gereç kullanabilen çok zeki canlılardır",
         "penguen": "🐧 Penguenler uçamayan ama deniz altında adeta uçarcasına çok hızlı yüzen kuşlardır Eşlerine çok sadıktırlar",
         "flamingo": "🦩 Flamingolar tüylerindeki pembe rengi yedikleri karides ve yosunlardan alırlar Genelde tek ayak üzerinde dururlar",
-        "deve": "🐫 Develer hörgüçlerinde su değil yağ depolarlar Bu sayede çöl şartlarında günlerce susuz ve yemeksi
+        "deve": "🐫 Develer hörgüçlerinde su değil yağ depolarlar Bu sayede çöl şartlarında günlerce susuz ve yemeksiz ilerleyebilirler",
+        "kanguru": "🦘 Kangurular geri geri yürüyemezler Kuyruklarını adeta üçüncü bir bacak gibi denge kurmak için kullanırlar",
+        "koala": "🐨 Koalalar okaliptüs yaprakları ile beslenirler Bu yaprakların sindirimi zor olduğu için enerjilerini korumak amacıyla g
