@@ -2,9 +2,13 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sucuk AI - Gelişmiş Asistan</title>
     <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
@@ -14,6 +18,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
         .header-area {
             display: flex;
@@ -22,6 +27,7 @@
             padding: 15px 25px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
         .site-title {
             font-size: 18px;
@@ -37,6 +43,40 @@
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .main-logo-watermark {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.15;
+            pointer-events: none;
+            text-align: center;
+            z-index: 0;
+        }
+        .main-logo-watermark .big-emoji {
+            font-size: 90px;
+            margin-bottom: 10px;
+        }
+        .main-logo-watermark .big-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ff4757;
+            letter-spacing: 2px;
+        }
         .chat-messages {
             flex: 1;
             padding: 20px;
@@ -44,11 +84,9 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            background-color: #ffffff;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
         }
         .message {
             max-width: 85%;
@@ -84,20 +122,19 @@
             display: block;
         }
         .chat-input-area {
-            padding: 20px;
+            padding: 15px 20px;
             background-color: #ffffff;
             border-top: 1px solid #e0e0e0;
-            position: sticky;
-            bottom: 0;
+            flex-shrink: 0;
         }
         .input-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
             display: flex;
+            align-items: center;
+            width: 100%;
         }
         .chat-input {
             flex: 1;
-            padding: 15px;
+            padding: 15px 20px;
             border: 1px solid #ffccd0;
             background-color: #fff5f5;
             color: #333333;
@@ -105,6 +142,7 @@
             font-size: 16px;
             outline: none;
             transition: all 0.2s;
+            min-width: 0;
         }
         .chat-input:focus {
             border-color: #ff4757;
@@ -116,12 +154,17 @@
             color: white;
             border: none;
             padding: 0 25px;
+            height: 50px;
             margin-left: 12px;
             border-radius: 24px;
             cursor: pointer;
             font-weight: 600;
             font-size: 16px;
             transition: background 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .send-btn:hover {
             background-color: #e84118;
@@ -135,14 +178,21 @@
     <div class="logo-box">🌭 SUCUK AI</div>
 </div>
 
-<div id="chatMessages" class="chat-messages">
-    <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
+<div class="chat-container">
+    <div class="main-logo-watermark">
+        <div class="big-emoji">🌭</div>
+        <div class="big-title">SUCUK AI</div>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
+    </div>
 </div>
 
 <div class="chat-input-area">
     <div class="input-wrapper">
         <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya 'kedi fotoğrafı' gibi bir görsel isteyin..." onkeypress="handleKeyPress(event)">
-        <button class="send-btn" onclick="sendMessage()">Gönder</button>
+        <button class="send-btn" id="sendBtn">Gönder</button>
     </div>
 </div>
 
@@ -167,6 +217,17 @@
         }, 400);
     }
 
+    // Mobildeki basmama sorununu çözen tetikleyici
+    const btn = document.getElementById('sendBtn');
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
+    btn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
+
     function appendMessage(text, className, htmlContent = null) {
         const chatMessages = document.getElementById('chatMessages');
         const messageDiv = document.createElement('div');
@@ -185,33 +246,35 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // TAM DÜZELTİLMİŞ GÖRSEL BULMA SİSTEMİ
+        // GÖRSEL BULMA SİSTEMİ
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
-            // Cümledeki gereksiz ekleri ve kelimeleri temizliyoruz
-            const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster'];
+            // Tüm gereksiz kelimeleri ve ekleri temizliyoruz
+            const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster', 'bana', 'bir'];
             silinecekler.forEach(kelime => {
                 temizKelime = temizKelime.split(kelime).join('');
             });
             
-            temizKelime = temizKelime.trim();
+            // Kalan gereksiz harfleri ve boşlukları uçuruyoruz
+            temizKelime = temizKelime.replace(/\bi\b/g, '').trim();
 
             if (temizKelime === '') {
-                temizKelime = 'cat';
+                temizKelime = 'kedi';
             }
 
-            // Türkçe kelimeleri İngilizceye çevirerek Unsplash araması için mükemmel hale getiriyoruz
-            let ingilizceArama = temizKelime;
-            if (temizKelime === 'kedi') ingilizceArama = 'cat';
-            else if (temizKelime === 'köpek' || temizKelime === 'kopek') ingilizceArama = 'dog';
-            else if (temizKelime === 'araba') ingilizceArama = 'car';
-            else if (temizKelime === 'aslan') ingilizceArama = 'lion';
-            else if (temizKelime === 'kuş' || temizKelime === 'kus') ingilizceArama = 'bird';
-            else if (temizKelime === 'uzay') ingilizceArama = 'space';
-            else if (temizKelime === 'sucuk') ingilizceArama = 'sausage';
+            let ingilizceArama = 'cat';
+            if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
+            else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
+            else if (temizKelime.includes('araba')) ingilizceArama = 'car';
+            else if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
+            else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
+            else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
+            else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
+            else ingilizceArama = temizKelime;
 
-            const resimHtml = `<div class="image-container"><img src="https://images.unsplash.com/featured/?${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
+            // Kesin çalışan görsel servisiyle bağladık
+            const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
             appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
             return;
         }
@@ -285,7 +348,7 @@
         }
 
         if (text === 'merhaba' || text === 'selam') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım", 'bot-message');
+            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights, camera, action!", 'bot-message');
             return;
         }
 
@@ -295,4 +358,4 @@
 
 </body>
     </html>
-    
+        
