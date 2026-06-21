@@ -52,7 +52,7 @@
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
-            padding-bottom: 95px; 
+            padding-bottom: 90px; 
         }
         .chat-messages {
             flex: 1;
@@ -92,7 +92,6 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             max-width: 100%;
-            background-color: #f8f9fa;
         }
         .image-container img {
             width: 100%;
@@ -226,7 +225,7 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // %100 GARANTİLİ GÖRSEL BULMA MOTORU
+        // GELİŞMİŞ GÖRSEL BULMA VE TEMİZLEME MOTORU
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
@@ -234,7 +233,7 @@
                 'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
                 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 
                 'görsel', 'gorsel', 'getir', 'bul', 'yap', 
-                'oluştur', 'göster', 'bana', 'bir', 'tane', 'lütfen'
+                'oluştur', 'göster', 'bana', 'bir', 'tane'
             ];
             
             silinecekler.forEach(kelime => {
@@ -242,6 +241,7 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
+            // Kelime sonlarındaki anlamsız boş ekleri harfleri tamamen uçuruyoruz
             temizKelime = temizKelime.replace(/\s*[ıiuüçşğö]\s*$/g, '');
             temizKelime = temizKelime.trim();
 
@@ -249,29 +249,26 @@
                 temizKelime = 'sucuk';
             }
 
-            // Gelişmiş Türkçe-İngilizce Arama Çevirmeni (Unsplash servisinin %100 çalışmasını sağlar)
+            // Gelişmiş Türkçe-İngilizce Haritalama (Görsellerin kırılmasını önler)
             let ingilizceArama = temizKelime;
-            if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
-            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafa kemal ataturk';
-            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul city';
-            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara city';
-            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
-            else if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
+            if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
             else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
             else if (temizKelime.includes('araba')) ingilizceArama = 'car';
+            else if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
             else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
             else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
             else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
+            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafa kemal ataturk';
+            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul city';
+            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara city';
+            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir city';
 
-            // Doğrudan güvenli kaynak url mimarisi
-            const finalImgUrl = `https://images.unsplash.com/featured/?${encodeURIComponent(ingilizceArama)}`;
-            const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
-            
+            const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
             appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
             return;
         }
 
-        // BİLGİ VE İLLER VERİTABANI
+        // GENİŞ GENEL KÜLTÜR VE İLLER VERİTABANI
         if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
             appendMessage("🏰 İstanbul'un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
             return;
@@ -360,5 +357,4 @@
 </script>
 
 </body>
-            </html>
-    
+</html>
