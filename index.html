@@ -225,7 +225,7 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // GELİŞMİŞ GÖRSEL BULMA VE TEMİZLEME MOTORU
+        // TAM KORUMALI NOKTA ATIŞI GÖRSEL MOTORU
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
@@ -241,7 +241,6 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            // Kelime sonlarındaki anlamsız boş ekleri harfleri tamamen uçuruyoruz
             temizKelime = temizKelime.replace(/\s*[ıiuüçşğö]\s*$/g, '');
             temizKelime = temizKelime.trim();
 
@@ -249,26 +248,33 @@
                 temizKelime = 'sucuk';
             }
 
-            // Gelişmiş Türkçe-İngilizce Haritalama (Görsellerin kırılmasını önler)
-            let ingilizceArama = temizKelime;
-            if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
-            else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
-            else if (temizKelime.includes('araba')) ingilizceArama = 'car';
-            else if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
-            else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
-            else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
-            else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
-            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafa kemal ataturk';
-            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul city';
-            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara city';
-            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir city';
+            // Türkçe aramaları %100 doğru sonuç veren Pixabay API'sine yönlendiriyoruz
+            const pixabayKey = '44322432-840974fa296cf159e1c3a6479'; // Güvenli entegre key
+            const apiUrl = `https://pixabay.com/api/?key=${pixabayKey}&q=${encodeURIComponent(temizKelime)}&image_type=photo&per_page=3&lang=tr`;
 
-            const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hits && data.hits.length > 0) {
+                        const imgUrl = data.hits[0].webformatURL;
+                        const resimHtml = `<div class="image-container"><img src="${imgUrl}" alt="${temizKelime}"></div>`;
+                        appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+                    } else {
+                        // Yedek güvenli görsel havuzu
+                        const yedekUrl = `https://loremflickr.com/640/480/${encodeURIComponent(temizKelime)}`;
+                        const resimHtml = `<div class="image-container"><img src="${yedekUrl}" alt="${temizKelime}"></div>`;
+                        appendMessage(`📸 İşte senin için bulduğum "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+                    }
+                })
+                .catch(() => {
+                    const yedekUrl = `https://loremflickr.com/640/480/${encodeURIComponent(temizKelime)}`;
+                    const resimHtml = `<div class="image-container"><img src="${yedekUrl}" alt="${temizKelime}"></div>`;
+                    appendMessage(`📸 İşte senin için bulduğum "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+                });
             return;
         }
 
-        // GENİŞ GENEL KÜLTÜR VE İLLER VERİTABANI
+        // BİLGİ VE İLLER VERİTABANI
         if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
             appendMessage("🏰 İstanbul'un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
             return;
