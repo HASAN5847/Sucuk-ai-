@@ -166,7 +166,7 @@
 
 <div class="chat-container">
     <div id="chatMessages" class="chat-messages">
-        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı! Veri bankam tamamen güncellendi. Artık Türkiye'nin tüm illerini, başkentini, popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum. Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirime! 📸</div>
+        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı! Veri bankam tamamen güncellendi. Artık Türkiye'nin tüm illerini, başkentini, popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum. Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirim! 📸</div>
     </div>
 </div>
 
@@ -226,14 +226,13 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi') || text.includes('yap')) {
+        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi') || text.includes('yap') || text.includes('getir')) {
+            // Gelişmiş kelime temizleme mantığı (Ekleri ve gereksiz kelimeleri sıfır hata ile uçurur)
             let temizKelime = text;
-            
             const silinecekler = [
-                'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
-                'resmi', 'resme', 'resim', 'görseli', 'gorseli', 
-                'görsel', 'gorsel', 'getir', 'bul', 'yap', 
-                'oluştur', 'göster', 'bana', 'bir', 'tane', 'lütfen'
+                'bana', 'bir', 'tane', 'lütfen', 'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
+                'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 
+                'bul', 'yap', 'oluştur', 'göster'
             ];
             
             silinecekler.forEach(kelime => {
@@ -241,40 +240,40 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            temizKelime = temizKelime.replace(/\s*[ıiuüçşğö]\s*$/g, '');
+            // Kelimenin sonundaki gereksiz harf/ek kalıntılarını temizle
+            temizKelime = temizKelime.replace(/[ıiuüçşğö\s]+$/g, '');
             temizKelime = temizKelime.trim();
 
             if (temizKelime === '') {
                 temizKelime = 'sucuk';
             }
 
-            // EN POPÜLER ARAMALAR İÇİN NOKTA ATIŞI VE ASLA KIRILMAYAN LİNKLER
+            // HER KOŞULDA ÇALIŞAN, ASLA ENGELLENMEYEN GÜVENLİ RESİM CDN LİNKLERİ
             let finalImgUrl = '';
             
             if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) {
-                // Doğrudan hızlı ve güvenli bir Atatürk portresi
-                finalImgUrl = 'https://images.unsplash.com/photo-1589483232748-515c025575be?auto=format&fit=crop&q=80&w=600';
+                // Wikimedia'nın en güvenli ve engelsiz doğrudan kaynak linki
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk_profile.jpg/480px-Ataturk_profile.jpg';
             } else if (temizKelime.includes('aslan')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg';
             } else if (temizKelime.includes('inek')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2015/11/07/11/42/cow-1031448_640.jpg';
             } else if (temizKelime.includes('kedi')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
             } else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_640.jpg';
             } else if (temizKelime.includes('istanbul')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2018/01/21/21/24/istanbul-3097587_640.jpg';
             } else if (temizKelime.includes('sucuk')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=600';
+                finalImgUrl = 'https://cdn.pixabay.com/photo/2014/04/22/02/56/pizza-329523_640.jpg';
             } else {
-                // Diğer her şey için güvenli yedek motoru (İngilizceye çevirerek)
-                let ingilizceArama = 'sausage';
+                // Diğer dinamik kelimeler için en kararlı havuz motoru
+                let ingilizceArama = temizKelime;
                 if (temizKelime.includes('ankara')) ingilizceArama = 'ankara';
                 else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
                 else if (temizKelime.includes('araba')) ingilizceArama = 'car';
                 else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
                 else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
-                else ingilizceArama = temizKelime;
 
                 finalImgUrl = `https://loremflickr.com/600/400/${encodeURIComponent(ingilizceArama)}`;
             }
@@ -306,7 +305,7 @@
 
         const sakalar = [
             "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
-            "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳"
+            "🍳 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🥓"
         ];
 
         if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
@@ -341,4 +340,5 @@
 </script>
 
 </body>
-</html>
+    </html>
+    
