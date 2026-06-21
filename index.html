@@ -52,7 +52,7 @@
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
-            padding-bottom: 90px; 
+            padding-bottom: 95px; 
         }
         .chat-messages {
             flex: 1;
@@ -92,6 +92,7 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             max-width: 100%;
+            background-color: #f8f9fa;
         }
         .image-container img {
             width: 100%;
@@ -165,13 +166,13 @@
 
 <div class="chat-container">
     <div id="chatMessages" class="chat-messages">
-        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
+        <div class="message bot-message">Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim</div>
     </div>
 </div>
 
 <div class="chat-input-area">
     <div class="input-wrapper">
-        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya görsel isteyin..." onkeypress="handleKeyPress(event)">
+        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya görsel isteyin" onkeypress="handleKeyPress(event)">
         <button class="send-btn" id="sendBtn">Gönder</button>
     </div>
 </div>
@@ -225,7 +226,6 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // GELİŞMİŞ GÖRSEL BULMA VE TEMİZLEME MOTORU
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
@@ -233,7 +233,7 @@
                 'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
                 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 
                 'görsel', 'gorsel', 'getir', 'bul', 'yap', 
-                'oluştur', 'göster', 'bana', 'bir', 'tane'
+                'oluştur', 'göster', 'bana', 'bir', 'tane', 'lütfen'
             ];
             
             silinecekler.forEach(kelime => {
@@ -241,7 +241,6 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            // Kelime sonlarındaki anlamsız boş ekleri harfleri tamamen uçuruyoruz
             temizKelime = temizKelime.replace(/\s*[ıiuüçşğö]\s*$/g, '');
             temizKelime = temizKelime.trim();
 
@@ -249,81 +248,53 @@
                 temizKelime = 'sucuk';
             }
 
-            // Gelişmiş Türkçe-İngilizce Haritalama (Görsellerin kırılmasını önler)
             let ingilizceArama = temizKelime;
-            if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
+            if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
+            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'ataturk';
+            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul';
+            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara';
+            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
+            else if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
             else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
             else if (temizKelime.includes('araba')) ingilizceArama = 'car';
-            else if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
             else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
             else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
-            else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
-            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafa kemal ataturk';
-            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul city';
-            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara city';
-            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir city';
 
-            const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+            let finalImgUrl = `https://loremflickr.com/600/400/${encodeURIComponent(ingilizceArama)}`;
+            
+            if (ingilizceArama === 'ataturk') {
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Ataturk_profile.jpg';
+            }
+
+            const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
+            appendMessage(`İşte senin için bulduğum harika ${temizKelime} görseli`, 'bot-message', resimHtml);
             return;
         }
 
-        // GENİŞ GENEL KÜLTÜR VE İLLER VERİTABANI
         if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
-            appendMessage("🏰 İstanbul'un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
+            appendMessage("İstanbulun Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır", 'bot-message');
             return;
         }
 
         if (text.includes('istanbul')) {
-            appendMessage("🌉 İstanbul Türkiye'nin en kalabalık ve ekonomik açıdan en önemli şehridir Roma Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür 🌍", 'bot-message');
+            appendMessage("İstanbul Türkiyenin en kalabalık ve ekonomik açıdan en önemli şehridir Roma Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür", 'bot-message');
             return;
         }
 
         if (text.includes('ankara')) {
-            appendMessage("🏛️ Ankara Türkiye Cumhuriyeti'nin başkentidir Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşı'nın kalbi olmuş ve Anıtkabir'e ev sahipliği yapmaktadır 🇹🇷", 'bot-message');
-            return;
-        }
-
-        if (text.includes('izmir')) {
-            appendMessage("🌊 İzmir Ege'nin İncisi olarak bilinen Türkiye'nin üçüncü büyük şehridir Tarihi Saat Kulesi, Efes Antik Kenti ve muhteşem sahilleri ile bilinir ⚓", 'bot-message');
+            appendMessage("Ankara Türkiye Cumhuriyetinin başkentidir Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşının kalbi olmuş ve Anıtkabire ev sahipliği yapmaktadır", 'bot-message');
             return;
         }
 
         if (text.includes('atatürk') || text.includes('ataturk')) {
-            appendMessage("✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur Hayatı boyunca 4000'den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır 🇹🇷", 'bot-message');
+            appendMessage("Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyetini kurmuş ve ilk cumhurbaşkanı olmuştur Hayatı boyunca 4000den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır", 'bot-message');
             return;
         }
-
-        if (text.includes('türkiye') || text.includes('turkiye')) {
-            appendMessage("🇹🇷 Türkiye Asya ve Avrupa kıtalarını birbirine bağlayan muazzam bir köprüdür Toprakları üzerinde Göbeklitepe gibi insanlık tarihinin bilinen en eski tapınaklarına ev sahipliği yapar 🏛️", 'bot-message');
-            return;
-        }
-
-        const hayvanBilgileri = [
-            "🦁 Çitalar sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler 🐆",
-            "🐋 Mavi balinaların kalbi o kadar büyüktür ki bir insan atardamarlarının içinde rahatça yüzebilir 🌊",
-            "🐙 Ahtapotların tam 3 tane kalbi ve dokuz tane beyni vardır Ayrıca kanları mavi renktedir 💎"
-        ];
-
-        const egitimBilgileri = [
-            "📝 Düzenli ve planlı ders çalışmak bilgilerin kalıcı hafızaya geçmesini sağlar 🧠",
-            "⏰ Pomodoro tekniği odaklanmayı en üst seviyeye çıkaran harika bir yöntemdir ⏱️"
-        ];
 
         const sakalar = [
-            "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
-            "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳"
+            "Sucuklar neden hiç sır tutamaz Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler",
+            "Yumurta sucuğa ne demiş Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun"
         ];
-
-        if (text.includes('hayvan') || text.includes('aslan')) {
-            appendMessage(hayvanBilgileri[Math.floor(Math.random() * hayvanBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders')) {
-            appendMessage(egitimBilgileri[Math.floor(Math.random() * egitimBilgileri.length)], 'bot-message');
-            return;
-        }
 
         if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
             appendMessage(sakalar[Math.floor(Math.random() * sakalar.length)], 'bot-message');
@@ -338,21 +309,21 @@
                 const temizIslem = cleanMathInput.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
                 const sonuc = Function('"use strict";return (' + temizIslem + ')')();
                 if (sonuc !== undefined && !isNaN(sonuc)) {
-                    appendMessage(`📊 İşleminizin sonucu: ${sonuc} ✅`, 'bot-message');
+                    appendMessage(`İşleminizin sonucu ${sonuc}`, 'bot-message');
                     return;
                 }
             } catch (e) {
-                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
+                appendMessage("Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
                 return;
             }
         }
 
         if (text === 'merhaba' || text === 'selam') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights, camera, action!", 'bot-message');
+            appendMessage("Merhaba size yardımcı olmaktan mutluluk duyarım", 'bot-message');
             return;
         }
 
-        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
+        appendMessage("Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
     }
 </script>
 
