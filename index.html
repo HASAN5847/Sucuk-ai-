@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sucuk AI - Gelişmiş Asistan</title>
     <style>
         * {
@@ -52,30 +52,8 @@
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
-        }
-        .main-logo-watermark {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.12;
-            pointer-events: none;
-            text-align: center;
-            z-index: 0;
-        }
-        .main-logo-watermark .big-emoji {
-            font-size: 90px;
-            margin-bottom: 10px;
-        }
-        .main-logo-watermark .big-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #ff4757;
-            letter-spacing: 2px;
+            /* Alt giriş alanı fixed olduğu için mesajların arkada kalmaması için boşluk bırakıyoruz */
+            padding-bottom: 90px; 
         }
         .chat-messages {
             flex: 1;
@@ -121,14 +99,19 @@
             height: auto;
             display: block;
         }
-        /* Soru yazma yerini çok az yukarı kaldıran alan */
+        /* Giriş alanını ekranın altına çiviledik ve telefon çentiğine göre güvenli alan bıraktık */
         .chat-input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding: 15px 20px;
+            padding-bottom: calc(15px + env(safe-area-inset-bottom));
             background-color: #ffffff;
             border-top: 1px solid #e0e0e0;
-            flex-shrink: 0;
             z-index: 10;
-            margin-bottom: 15px;
+            max-width: 800px;
+            margin: 0 auto;
         }
         .input-wrapper {
             display: flex;
@@ -183,11 +166,6 @@
 </div>
 
 <div class="chat-container">
-    <div class="main-logo-watermark">
-        <div class="big-emoji">🌭</div>
-        <div class="big-title">SUCUK AI</div>
-    </div>
-
     <div id="chatMessages" class="chat-messages">
         <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Size nasıl yardımcı olabilirim? 🧮 Matematiksel işlemleri hesaplayabilir genel kültür bilgileri verebilir veya istediğiniz bir şeyin fotoğrafını getirebilirim! 📸</div>
     </div>
@@ -328,7 +306,7 @@
         }
 
         if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders')) {
-            appendMessage(egitimBilgileri[Math.floor(Math.random() * egitimBilgileri.length)], 'bot-message');
+            appendMessage(egitimBilgileri[Math.floor(Math.where() * egitimBilgileri.length)], 'bot-message');
             return;
         }
 
@@ -365,4 +343,4 @@
 
 </body>
     </html>
-            
+    
