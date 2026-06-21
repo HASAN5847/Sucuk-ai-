@@ -62,7 +62,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0.15;
+            opacity: 0.12;
             pointer-events: none;
             text-align: center;
             z-index: 0;
@@ -121,13 +121,14 @@
             height: auto;
             display: block;
         }
-        /* Burayı tamamen güvenli hale getirdik navigasyon çubuğu ezemeyecek */
+        /* Soru yazma yerini çok az yukarı kaldıran alan */
         .chat-input-area {
-            padding: 15px 20px 25px 20px;
+            padding: 15px 20px;
             background-color: #ffffff;
             border-top: 1px solid #e0e0e0;
             flex-shrink: 0;
             z-index: 10;
+            margin-bottom: 15px;
         }
         .input-wrapper {
             display: flex;
@@ -136,7 +137,7 @@
         }
         .chat-input {
             flex: 1;
-            padding: 15px 20px;
+            padding: 0 20px;
             border: 1px solid #ffccd0;
             background-color: #fff5f5;
             color: #333333;
@@ -194,7 +195,7 @@
 
 <div class="chat-input-area">
     <div class="input-wrapper">
-        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya 'kedi fotoğrafı' gibi bir görsel isteyin..." onkeypress="handleKeyPress(event)">
+        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya görsel isteyin..." onkeypress="handleKeyPress(event)">
         <button class="send-btn" id="sendBtn">Gönder</button>
     </div>
 </div>
@@ -251,18 +252,27 @@
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
-            const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster', 'bana', 'bir'];
+            const silinecekler = [
+                'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
+                'resmi', 'resme', 'resim', 'görseli', 'gorseli', 
+                'görsel', 'gorsel', 'getir', 'bul', 'yap', 
+                'oluştur', 'göster', 'bana', 'bir', 'tane'
+            ];
+            
             silinecekler.forEach(kelime => {
-                temizKelime = temizKelime.split(kelime).join('');
+                let regex = new RegExp('\\b' + kelime + '\\b', 'g');
+                temizKelime = temizKelime.replace(regex, '');
             });
             
-            temizKelime = temizKelime.replace(/\bi\b/g, '').trim();
+            temizKelime = temizKelime.replace(/\bi\b/g, '');
+            temizKelime = temizKelime.replace(/\bı\b/g, '');
+            temizKelime = temizKelime.trim();
 
             if (temizKelime === '') {
-                temizKelime = 'kedi';
+                temizKelime = 'sucuk';
             }
 
-            let ingilizceArama = 'cat';
+            let ingilizceArama = temizKelime;
             if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
             else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
             else if (temizKelime.includes('araba')) ingilizceArama = 'car';
@@ -270,7 +280,6 @@
             else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
             else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
             else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
-            else ingilizceArama = temizKelime;
 
             const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
             appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
@@ -313,7 +322,7 @@
             return;
         }
 
-        if (text.includes('hayvan') || text.includes('aslan') || text.includes('kedi')) {
+        if (text.includes('hayvan') || text.includes('aslan')) {
             appendMessage(hayvanBilgileri[Math.floor(Math.random() * hayvanBilgileri.length)], 'bot-message');
             return;
         }
@@ -356,4 +365,4 @@
 
 </body>
     </html>
-    
+            
