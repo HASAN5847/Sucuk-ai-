@@ -239,7 +239,6 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            // Ekstra ekleri ve boşlukları temizle
             temizKelime = temizKelime.replace(/[ıiuüçşğö\s]+$/g, '');
             temizKelime = temizKelime.trim();
 
@@ -247,38 +246,25 @@
                 temizKelime = 'sucuk';
             }
 
-            // ASLA ENGELLENMEYEN VE KAPANMAYAN GÜVENLİ GITHUB KÖKENLİ RESİM LİNKLERİ
+            // DOĞRUDAN TAM METİN KONTROLÜ İLE KESİN ÇÖZÜM LİNKLERİ
             let finalImgUrl = '';
             
-            if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) {
-                finalImgUrl = 'https://raw.githubusercontent.com/wesbos/images/master/ataturk.jpg';
-            } else if (temizKelime.includes('aslan')) {
-                finalImgUrl = 'https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/tasks/json/kitten.jpg'; // Geçici test kedisi yerine aslan alternatifi yüklenebilir, sorunsuz cdn'dir
-                finalImgUrl = 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600;'; // Alternatif Unsplash (Güvenli)
-            } else if (temizKelime.includes('inek')) {
+            if (text.includes('atatürk') || text.includes('ataturk')) {
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk_profile.jpg/500px-Ataturk_profile.jpg';
+            } else if (text.includes('inek')) {
                 finalImgUrl = 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600';
-            } else if (temizKelime.includes('kedi')) {
+            } else if (text.includes('aslan')) {
+                finalImgUrl = 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600';
+            } else if (text.includes('kedi')) {
                 finalImgUrl = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600';
-            } else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) {
+            } else if (text.includes('köpek') || text.includes('kopek')) {
                 finalImgUrl = 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600';
-            } else if (temizKelime.includes('istanbul')) {
+            } else if (text.includes('istanbul')) {
                 finalImgUrl = 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600';
-            } else if (temizKelime.includes('sucuk')) {
+            } else if (text.includes('sucuk')) {
                 finalImgUrl = 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600';
             } else {
-                let ingilizceArama = temizKelime;
-                if (temizKelime.includes('ankara')) ingilizceArama = 'ankara';
-                else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
-                else if (temizKelime.includes('araba')) ingilizceArama = 'car';
-                else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
-                else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
-
-                finalImgUrl = `https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600`; // Güvenli genel manzara
-            }
-
-            // Eğer özel hayvanlar dışındaysa doğrudan Unsplash kaynağı kullanalım kırılmasın
-            if(temizKelime === 'atatürk' || temizKelime === 'ataturk') {
-                finalImgUrl = 'https://raw.githubusercontent.com/mohammad-faisal/mohammad-faisal/main/ataturk.jpg'; // Tam çalışan yedek raw linki
+                finalImgUrl = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600';
             }
 
             const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
@@ -286,7 +272,7 @@
             return;
         }
 
-        if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
+        if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul' ) && text.includes('nedir'))) {
             appendMessage("🏰 İstanbul un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
             return;
         }
@@ -338,7 +324,7 @@
             return;
         }
 
-        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
+        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteebilirsiniz", 'bot-message');
     }
 </script>
 
