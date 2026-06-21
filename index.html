@@ -52,7 +52,6 @@
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
-            /* Alt giriş alanı fixed olduğu için mesajların arkada kalmaması için boşluk bırakıyoruz */
             padding-bottom: 90px; 
         }
         .chat-messages {
@@ -99,7 +98,6 @@
             height: auto;
             display: block;
         }
-        /* Giriş alanını ekranın altına çiviledik ve telefon çentiğine göre güvenli alan bıraktık */
         .chat-input-area {
             position: fixed;
             bottom: 0;
@@ -227,6 +225,7 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
+        // GELİŞMİŞ GÖRSEL BULMA VE TEMİZLEME MOTORU
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
@@ -242,14 +241,15 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            temizKelime = temizKelime.replace(/\bi\b/g, '');
-            temizKelime = temizKelime.replace(/\bı\b/g, '');
+            // Kelime sonlarındaki anlamsız boş ekleri harfleri tamamen uçuruyoruz
+            temizKelime = temizKelime.replace(/\s*[ıiuüçşğö]\s*$/g, '');
             temizKelime = temizKelime.trim();
 
             if (temizKelime === '') {
                 temizKelime = 'sucuk';
             }
 
+            // Gelişmiş Türkçe-İngilizce Haritalama (Görsellerin kırılmasını önler)
             let ingilizceArama = temizKelime;
             if (temizKelime.includes('kedi')) ingilizceArama = 'cat';
             else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) ingilizceArama = 'dog';
@@ -258,9 +258,44 @@
             else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
             else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
             else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
+            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafa kemal ataturk';
+            else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul city';
+            else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara city';
+            else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir city';
 
             const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
             appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+            return;
+        }
+
+        // GENİŞ GENEL KÜLTÜR VE İLLER VERİTABANI
+        if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
+            appendMessage("🏰 İstanbul'un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
+            return;
+        }
+
+        if (text.includes('istanbul')) {
+            appendMessage("🌉 İstanbul Türkiye'nin en kalabalık ve ekonomik açıdan en önemli şehridir Roma Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür 🌍", 'bot-message');
+            return;
+        }
+
+        if (text.includes('ankara')) {
+            appendMessage("🏛️ Ankara Türkiye Cumhuriyeti'nin başkentidir Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşı'nın kalbi olmuş ve Anıtkabir'e ev sahipliği yapmaktadır 🇹🇷", 'bot-message');
+            return;
+        }
+
+        if (text.includes('izmir')) {
+            appendMessage("🌊 İzmir Ege'nin İncisi olarak bilinen Türkiye'nin üçüncü büyük şehridir Tarihi Saat Kulesi, Efes Antik Kenti ve muhteşem sahilleri ile bilinir ⚓", 'bot-message');
+            return;
+        }
+
+        if (text.includes('atatürk') || text.includes('ataturk')) {
+            appendMessage("✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur Hayatı boyunca 4000'den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır 🇹🇷", 'bot-message');
+            return;
+        }
+
+        if (text.includes('türkiye') || text.includes('turkiye')) {
+            appendMessage("🇹🇷 Türkiye Asya ve Avrupa kıtalarını birbirine bağlayan muazzam bir köprüdür Toprakları üzerinde Göbeklitepe gibi insanlık tarihinin bilinen en eski tapınaklarına ev sahipliği yapar 🏛️", 'bot-message');
             return;
         }
 
@@ -268,16 +303,6 @@
             "🦁 Çitalar sıfırdan saatte 100 kilometre hıza sadece 3 saniyede ulaşabilirler 🐆",
             "🐋 Mavi balinaların kalbi o kadar büyüktür ki bir insan atardamarlarının içinde rahatça yüzebilir 🌊",
             "🐙 Ahtapotların tam 3 tane kalbi ve dokuz tane beyni vardır Ayrıca kanları mavi renktedir 💎"
-        ];
-
-        const turkiyeBilgileri = [
-            "🇹🇷 Türkiye toprakları üzerinde kurulu olan Göbeklitepe insanlık tarihinin bilinen en eski tapınağıdır 🏛️",
-            "🌍 İstanbul dünyada iki kıta üzerine kurulmuş tek metropoldür 🌉"
-        ];
-
-        const ataturkBilgileri = [
-            "✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur 🇹🇷",
-            "📚 Atatürk hayatı boyunca 4000'den fazla kitap okumuştur ve kendisi aynı zamanda bir Geometri kitabı yazmıştır 📐"
         ];
 
         const egitimBilgileri = [
@@ -290,23 +315,13 @@
             "🥚 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🍳"
         ];
 
-        if (text.includes('atatürk') || text.includes('ataturk')) {
-            appendMessage(ataturkBilgileri[Math.floor(Math.random() * ataturkBilgileri.length)], 'bot-message');
-            return;
-        }
-
-        if (text.includes('türkiye') || text.includes('turkiye')) {
-            appendMessage(turkiyeBilgileri[Math.floor(Math.random() * turkiyeBilgileri.length)], 'bot-message');
-            return;
-        }
-
         if (text.includes('hayvan') || text.includes('aslan')) {
             appendMessage(hayvanBilgileri[Math.floor(Math.random() * hayvanBilgileri.length)], 'bot-message');
             return;
         }
 
         if (text.includes('eğitim') || text.includes('egitim') || text.includes('ders')) {
-            appendMessage(egitimBilgileri[Math.floor(Math.where() * egitimBilgileri.length)], 'bot-message');
+            appendMessage(egitimBilgileri[Math.floor(Math.random() * egitimBilgileri.length)], 'bot-message');
             return;
         }
 
