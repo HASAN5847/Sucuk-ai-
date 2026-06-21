@@ -250,7 +250,7 @@
 
             let ingilizceArama = temizKelime;
             if (temizKelime.includes('aslan')) ingilizceArama = 'lion';
-            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'ataturk';
+            else if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) ingilizceArama = 'mustafakemal';
             else if (temizKelime.includes('istanbul')) ingilizceArama = 'istanbul';
             else if (temizKelime.includes('ankara')) ingilizceArama = 'ankara';
             else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
@@ -260,11 +260,8 @@
             else if (temizKelime.includes('kuş') || temizKelime.includes('kus')) ingilizceArama = 'bird';
             else if (temizKelime.includes('uzay')) ingilizceArama = 'space';
 
+            // Kesinlikle çalışan güvenli havuz link yapısı
             let finalImgUrl = `https://loremflickr.com/600/400/${encodeURIComponent(ingilizceArama)}`;
-            
-            if (ingilizceArama === 'ataturk') {
-                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Ataturk_profile.jpg';
-            }
 
             const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
             appendMessage(`İşte senin için bulduğum harika ${temizKelime} görseli`, 'bot-message', resimHtml);
@@ -328,4 +325,5 @@
 </script>
 
 </body>
-</html>
+            </html>
+    
