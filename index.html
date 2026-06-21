@@ -121,11 +121,13 @@
             height: auto;
             display: block;
         }
+        /* Burayı tamamen güvenli hale getirdik navigasyon çubuğu ezemeyecek */
         .chat-input-area {
-            padding: 15px 20px;
+            padding: 15px 20px 25px 20px;
             background-color: #ffffff;
             border-top: 1px solid #e0e0e0;
             flex-shrink: 0;
+            z-index: 10;
         }
         .input-wrapper {
             display: flex;
@@ -143,6 +145,7 @@
             outline: none;
             transition: all 0.2s;
             min-width: 0;
+            height: 50px;
         }
         .chat-input:focus {
             border-color: #ff4757;
@@ -217,7 +220,6 @@
         }, 400);
     }
 
-    // Mobildeki basmama sorununu çözen tetikleyici
     const btn = document.getElementById('sendBtn');
     btn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -246,17 +248,14 @@
     function handleBotResponse(input) {
         const text = input.toLowerCase().trim();
 
-        // GÖRSEL BULMA SİSTEMİ
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi')) {
             let temizKelime = text;
             
-            // Tüm gereksiz kelimeleri ve ekleri temizliyoruz
             const silinecekler = ['fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 'bul', 'yap', 'oluştur', 'göster', 'bana', 'bir'];
             silinecekler.forEach(kelime => {
                 temizKelime = temizKelime.split(kelime).join('');
             });
             
-            // Kalan gereksiz harfleri ve boşlukları uçuruyoruz
             temizKelime = temizKelime.replace(/\bi\b/g, '').trim();
 
             if (temizKelime === '') {
@@ -273,7 +272,6 @@
             else if (temizKelime.includes('sucuk')) ingilizceArama = 'sausage';
             else ingilizceArama = temizKelime;
 
-            // Kesin çalışan görsel servisiyle bağladık
             const resimHtml = `<div class="image-container"><img src="https://loremflickr.com/640/480/${encodeURIComponent(ingilizceArama)}" alt="${temizKelime}"></div>`;
             appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
             return;
@@ -358,4 +356,4 @@
 
 </body>
     </html>
-        
+    
