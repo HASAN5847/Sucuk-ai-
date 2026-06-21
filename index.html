@@ -166,7 +166,7 @@
 
 <div class="chat-container">
     <div id="chatMessages" class="chat-messages">
-        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı! Veri bankam tamamen güncellendi. Artık Türkiye'nin tüm illerini, başkentini, popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum. Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirim! 📸</div>
+        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Veri bankam tamamen güncellendi Artık Türkiye nin tüm illerini başkentini popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirim 📸</div>
     </div>
 </div>
 
@@ -227,7 +227,6 @@
         const text = input.toLowerCase().trim();
 
         if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi') || text.includes('yap') || text.includes('getir')) {
-            // Gelişmiş kelime temizleme mantığı (Ekleri ve gereksiz kelimeleri sıfır hata ile uçurur)
             let temizKelime = text;
             const silinecekler = [
                 'bana', 'bir', 'tane', 'lütfen', 'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
@@ -240,7 +239,6 @@
                 temizKelime = temizKelime.replace(regex, '');
             });
             
-            // Kelimenin sonundaki gereksiz harf/ek kalıntılarını temizle
             temizKelime = temizKelime.replace(/[ıiuüçşğö\s]+$/g, '');
             temizKelime = temizKelime.trim();
 
@@ -248,26 +246,24 @@
                 temizKelime = 'sucuk';
             }
 
-            // HER KOŞULDA ÇALIŞAN, ASLA ENGELLENMEYEN GÜVENLİ RESİM CDN LİNKLERİ
             let finalImgUrl = '';
             
             if (temizKelime.includes('atatürk') || temizKelime.includes('ataturk')) {
-                // Wikimedia'nın en güvenli ve engelsiz doğrudan kaynak linki
                 finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk_profile.jpg/480px-Ataturk_profile.jpg';
             } else if (temizKelime.includes('aslan')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg';
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Lion_waiting_in_Namutoni.jpg/640px-Lion_waiting_in_Namutoni.jpg';
             } else if (temizKelime.includes('inek')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2015/11/07/11/42/cow-1031448_640.jpg';
+                // Kesinlikle çalışan engelsiz resmi ve net inek görseli CDN linki
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Cow_female_black_white.jpg/640px-Cow_female_black_white.jpg';
             } else if (temizKelime.includes('kedi')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/640px-Cat03.jpg';
             } else if (temizKelime.includes('köpek') || temizKelime.includes('kopek')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_640.jpg';
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_Nine_Dogs.jpg/640px-Collage_of_Nine_Dogs.jpg';
             } else if (temizKelime.includes('istanbul')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2018/01/21/21/24/istanbul-3097587_640.jpg';
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Bosphorus_Bridge_%2](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Bosphorus_Bridge_2015.jpg/640px-Bosphorus_Bridge_2015.jpg)';
             } else if (temizKelime.includes('sucuk')) {
-                finalImgUrl = 'https://cdn.pixabay.com/photo/2014/04/22/02/56/pizza-329523_640.jpg';
+                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Kangal_sucuk.jpg/640px-Kangal_sucuk.jpg';
             } else {
-                // Diğer dinamik kelimeler için en kararlı havuz motoru
                 let ingilizceArama = temizKelime;
                 if (temizKelime.includes('ankara')) ingilizceArama = 'ankara';
                 else if (temizKelime.includes('izmir')) ingilizceArama = 'izmir';
@@ -279,33 +275,33 @@
             }
 
             const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli:`, 'bot-message', resimHtml);
+            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli`, 'bot-message', resimHtml);
             return;
         }
 
         if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul') && text.includes('nedir'))) {
-            appendMessage("🏰 İstanbul'un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir. Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır! 🇹🇷", 'bot-message');
+            appendMessage("🏰 İstanbul un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
             return;
         }
 
         if (text.includes('istanbul')) {
-            appendMessage("🌉 İstanbul Türkiye'nin en kalabalık ve ekonomik açıdan en önemli şehridir. Roma, Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür. 🌍", 'bot-message');
+            appendMessage("🌉 İstanbul Türkiye nin en kalabalık ve ekonomik açıdan en önemli şehridir Roma Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür 🌍", 'bot-message');
             return;
         }
 
         if (text.includes('ankara')) {
-            appendMessage("🏛️ Ankara Türkiye Cumhuriyeti'nin başkentidir. Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşı'nın kalbi olmuş ve Anıtkabir'e ev sahipliği yapmaktadır. 🇹🇷", 'bot-message');
+            appendMessage("🏛️ Ankara Türkiye Cumhuriyeti nin başkentidir Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşı nın kalbi olmuş ve Anıtkabir e ev sahipliği yapmaktadır 🇹🇷", 'bot-message');
             return;
         }
 
         if (text.includes('atatürk') || text.includes('ataturk')) {
-            appendMessage("✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti'ni kurmuş ve ilk cumhurbaşkanı olmuştur. Hayatı boyunca 4000'den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır. 🇹🇷", 'bot-message');
+            appendMessage("✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti ni kurmuş ve ilk cumhurbaşkanı olmuştur Hayatı boyunca 4000 den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır 🇹🇷", 'bot-message');
             return;
         }
 
         const sakalar = [
-            "🌭 Sucuklar neden hiç sır tutamaz? Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler! 😂",
-            "🍳 Yumurta sucuğa ne demiş? 'Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun!' 🥓"
+            "🌭 Sucuklar neden hiç sır tutamaz Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler 😂",
+            "🍳 Yumurta sucuğa ne demiş Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun 🥓"
         ];
 
         if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
@@ -321,21 +317,21 @@
                 const temizIslem = cleanMathInput.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
                 const sonuc = Function('"use strict";return (' + temizIslem + ')')();
                 if (sonuc !== undefined && !isNaN(sonuc)) {
-                    appendMessage(`📊 İşleminizin sonucu: ${sonuc} ✅`, 'bot-message');
+                    appendMessage(`📊 İşleminizin sonucu ${sonuc} ✅`, 'bot-message');
                     return;
                 }
             } catch (e) {
-                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim.", 'bot-message');
+                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
                 return;
             }
         }
 
         if (text === 'merhaba' || text === 'selam') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım! Lights, camera, action!", 'bot-message');
+            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights camera action", 'bot-message');
             return;
         }
 
-        appendMessage("❓ Yazdığınız ifadeyi anlayamadım. Bana bilgi sorabilir veya görsel isteyebilirsiniz.", 'bot-message');
+        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteyebilirsiniz", 'bot-message');
     }
 </script>
 
