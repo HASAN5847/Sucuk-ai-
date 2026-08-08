@@ -1,332 +1,60 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Sucuk AI - Gelişmiş Asistan</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .header-area {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            flex-shrink: 0;
-        }
-        .site-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        .logo-box {
-            background-color: #ff4757;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding-bottom: 95px; 
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background-color: transparent;
-            position: relative;
-            z-index: 1;
-        }
-        .message {
-            max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 12px;
-            font-size: 16px;
-            line-height: 1.6;
-            word-wrap: break-word;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        .user-message {
-            background-color: #ff4757;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-        .bot-message {
-            background-color: #f1f3f5;
-            color: #212529;
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-        .image-container {
-            margin-top: 12px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            max-width: 100%;
-            background-color: #f8f9fa;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .chat-input-area {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 15px 20px;
-            padding-bottom: calc(15px + env(safe-area-inset-bottom));
-            background-color: #ffffff;
-            border-top: 1px solid #e0e0e0;
-            z-index: 10;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-        .chat-input {
-            flex: 1;
-            padding: 0 20px;
-            border: 1px solid #ffccd0;
-            background-color: #fff5f5;
-            color: #333333;
-            border-radius: 24px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.2s;
-            min-width: 0;
-            height: 50px;
-        }
-        .chat-input:focus {
-            border-color: #ff4757;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
-        }
-        .send-btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 0 25px;
-            height: 50px;
-            margin-left: 12px;
-            border-radius: 24px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: background 0.2s;
-            white-space: nowrap;
-            flex-shrink: 0;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        .send-btn:hover {
-            background-color: #e84118;
-        }
-    </style>
+<title>Robux</title>
+<style>
+body {
+  font-family sans-serif
+  background-color #191919
+  color white
+  display flex
+  justify-content center
+  align-items center
+  height 100vh
+  margin 0
+}
+.card {
+  background-color #232527
+  padding 20px
+  border-radius 8px
+  width 300px
+  text-align center
+}
+input select button {
+  width 100%
+  padding 10px
+  margin 10px 0
+  border-radius 4px
+  border none
+}
+button {
+  background-color #00a2ff
+  color white
+  font-weight bold
+  cursor pointer
+}
+</style>
 </head>
 <body>
 
-<div class="header-area">
-    <div class="site-title">Sucuk AI Asistanı</div>
-    <div class="logo-box">🌭 SUCUK AI</div>
+<div class="card">
+  <h2>Robux Al</h2>
+  <form>
+    <label>Kullanici Adi</label>
+    <input type="text" placeholder="Adinizi girin">
+    
+    <label>Robux Miktari</label>
+    <select>
+      <option value="400">400 Robux</option>
+      <option value="800">800 Robux</option>
+      <option value="1700">1700 Robux</option>
+      <option value="4500">4500 Robux</option>
+      <option value="10000">10000 Robux</option>
+    </select>
+    
+    <button type="button">Devam Et</button>
+  </form>
 </div>
-
-<div class="chat-container">
-    <div id="chatMessages" class="chat-messages">
-        <div class="message bot-message">👋 Merhaba ben Sucuk AI Asistanı Veri bankam tamamen güncellendi Artık Türkiye nin tüm illerini başkentini popüler hayvanları ve Atatürk hakkındaki bilgileri eksiksiz biliyorum Ayrıca istediğiniz şeyin fotoğrafını da anında getirebilirim 📸</div>
-    </div>
-</div>
-
-<div class="chat-input-area">
-    <div class="input-wrapper">
-        <input type="text" id="userInput" class="chat-input" placeholder="Bir şey sorun veya görsel isteyin..." onkeypress="handleKeyPress(event)">
-        <button class="send-btn" id="sendBtn">Gönder</button>
-    </div>
-</div>
-
-<script>
-    function handleKeyPress(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    }
-
-    function sendMessage() {
-        const inputElement = document.getElementById('userInput');
-        const messageText = inputElement.value.trim();
-        
-        if (messageText === '') return;
-
-        appendMessage(messageText, 'user-message');
-        inputElement.value = '';
-
-        setTimeout(() => {
-            handleBotResponse(messageText);
-        }, 400);
-    }
-
-    const btn = document.getElementById('sendBtn');
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        sendMessage();
-    });
-    btn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        sendMessage();
-    });
-
-    function appendMessage(text, className, htmlContent = null) {
-        const chatMessages = document.getElementById('chatMessages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${className}`;
-        
-        if (htmlContent) {
-            messageDiv.innerHTML = text + htmlContent;
-        } else {
-            messageDiv.innerText = text;
-        }
-        
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function handleBotResponse(input) {
-        let text = input.toLowerCase().trim();
-
-        if (text.includes('fotoğraf') || text.includes('fotograf') || text.includes('resim') || text.includes('görsel') || text.includes('resmi') || text.includes('yap') || text.includes('getir')) {
-            let temizKelime = text;
-            const silinecekler = [
-                'bana', 'bir', 'tane', 'lütfen', 'fotoğrafı', 'fotografi', 'fotoğraf', 'fotograf', 
-                'resmi', 'resme', 'resim', 'görseli', 'gorseli', 'görsel', 'gorsel', 'getir', 
-                'bul', 'yap', 'oluştur', 'göster'
-            ];
-            
-            silinecekler.forEach(kelime => {
-                let regex = new RegExp('\\b' + kelime + '\\b', 'g');
-                temizKelime = temizKelime.replace(regex, '');
-            });
-            
-            temizKelime = temizKelime.replace(/[ıiuüçşğö\s]+$/g, '');
-            temizKelime = temizKelime.trim();
-
-            if (temizKelime === '') {
-                temizKelime = 'sucuk';
-            }
-
-            // DOĞRUDAN TAM METİN KONTROLÜ İLE KESİN ÇÖZÜM LİNKLERİ
-            let finalImgUrl = '';
-            
-            if (text.includes('atatürk') || text.includes('ataturk')) {
-                finalImgUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk_profile.jpg/500px-Ataturk_profile.jpg';
-            } else if (text.includes('inek')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600';
-            } else if (text.includes('aslan')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600';
-            } else if (text.includes('kedi')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600';
-            } else if (text.includes('köpek') || text.includes('kopek')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600';
-            } else if (text.includes('istanbul')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600';
-            } else if (text.includes('sucuk')) {
-                finalImgUrl = 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600';
-            } else {
-                finalImgUrl = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600';
-            }
-
-            const resimHtml = `<div class="image-container"><img src="${finalImgUrl}" alt="${temizKelime}"></div>`;
-            appendMessage(`📸 İşte senin için bulduğum harika "${temizKelime}" görseli`, 'bot-message', resimHtml);
-            return;
-        }
-
-        if (text.includes('fetih') || text.includes('fethi') || (text.includes('istanbul' ) && text.includes('nedir'))) {
-            appendMessage("🏰 İstanbul un Fethi 29 Mayıs 1453 tarihinde Fatih Sultan Mehmet komutasındaki Osmanlı ordusu tarafından gerçekleştirilmiştir Bu olayla Bizans İmparatorluğu sona ermiş ve Orta Çağ kapanıp Yeni Çağ başlamıştır 🇹🇷", 'bot-message');
-            return;
-        }
-
-        if (text.includes('istanbul')) {
-            appendMessage("🌉 İstanbul Türkiye nin en kalabalık ve ekonomik açıdan en önemli şehridir Roma Bizans ve Osmanlı İmparatorluklarına başkentlik yapmış dünyadaki tek iki kıta üzerine kurulu metropoldür 🌍", 'bot-message');
-            return;
-        }
-
-        if (text.includes('ankara')) {
-            appendMessage("🏛️ Ankara Türkiye Cumhuriyeti nin başkentidir Siyasi ve idari merkez olmasının yanı sıra Kurtuluş Savaşı nın kalbi olmuş ve Anıtkabir e ev sahipliği yapmaktadır 🇹🇷", 'bot-message');
-            return;
-        }
-
-        if (text.includes('atatürk') || text.includes('ataturk')) {
-            appendMessage("✨ Mustafa Kemal Atatürk 1923 yılında Türkiye Cumhuriyeti ni kurmuş ve ilk cumhurbaşkanı olmuştur Hayatı boyunca 4000 den fazla kitap okumuştur ve bir Geometri kitabı yazmıştır 🇹🇷", 'bot-message');
-            return;
-        }
-
-        const sakalar = [
-            "🌭 Sucuklar neden hiç sır tutamaz Çünkü içleri her zaman doludur ve kesilince her şeyi dökerler 😂",
-            "🍳 Yumurta sucuğa ne demiş Ayrılmaz bir ikiliyiz ama her seferinde tavanın dibini sen yakıyorsun 🥓"
-        ];
-
-        if (text.includes('şaka') || text.includes('saka') || text.includes('sucuk')) {
-            appendMessage(sakalar[Math.floor(Math.random() * sakalar.length)], 'bot-message');
-            return;
-        }
-
-        const mathPattern = /^[0-9\s\+\-\*\/\.\(\)]+$/;
-        let cleanMathInput = input.replace(/x/gi, '*');
-
-        if (mathPattern.test(cleanMathInput)) {
-            try {
-                const temizIslem = cleanMathInput.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
-                const sonuc = Function('"use strict";return (' + temizIslem + ')')();
-                if (sonuc !== undefined && !isNaN(sonuc)) {
-                    appendMessage(`📊 İşleminizin sonucu ${sonuc} ✅`, 'bot-message');
-                    return;
-                }
-            } catch (e) {
-                appendMessage("⚠️ Yazdığınız matematiksel işlemi tam olarak çözemedim", 'bot-message');
-                return;
-            }
-        }
-
-        if (text === 'merhaba' || text === 'selam') {
-            appendMessage("👋 Merhaba size yardımcı olmaktan mutluluk duyarım Lights, camera, action!", 'bot-message');
-            return;
-        }
-
-        appendMessage("❓ Yazdığınız ifadeyi anlayamadım Bana bilgi sorabilir veya görsel isteebilirsiniz", 'bot-message');
-    }
-</script>
 
 </body>
 </html>
