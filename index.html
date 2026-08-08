@@ -1,60 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-<title>Robux</title>
-<style>
-body {
-  font-family sans-serif
-  background-color #191919
-  color white
-  display flex
-  justify-content center
-  align-items center
-  height 100vh
-  margin 0
-}
-.card {
-  background-color #232527
-  padding 20px
-  border-radius 8px
-  width 300px
-  text-align center
-}
-input select button {
-  width 100%
-  padding 10px
-  margin 10px 0
-  border-radius 4px
-  border none
-}
-button {
-  background-color #00a2ff
-  color white
-  font-weight bold
-  cursor pointer
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robux Kataloğu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a1128; /* Lacivert arka plan */
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .catalog-card {
+      background-color: #1c2541; /* Kart için koyu mavi-gri tonu */
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      border: 1px solid #3a506b;
+    }
+
+    .catalog-card h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #4cc9f0;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #3a506b;
+      background-color: #0b132b;
+      color: #ffffff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #4cc9f0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: none;
+      background-color: #4361ee;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #3a0ca3;
+    }
+  </style>
 </head>
 <body>
 
-<div class="card">
-  <h2>Robux Al</h2>
-  <form>
-    <label>Kullanici Adi</label>
-    <input type="text" placeholder="Adinizi girin">
-    
-    <label>Robux Miktari</label>
-    <select>
-      <option value="400">400 Robux</option>
-      <option value="800">800 Robux</option>
-      <option value="1700">1700 Robux</option>
-      <option value="4500">4500 Robux</option>
-      <option value="10000">10000 Robux</option>
-    </select>
-    
-    <button type="button">Devam Et</button>
-  </form>
-</div>
+  <div class="catalog-card">
+    <h2>Robux Kataloğu</h2>
+    <form>
+      <div class="form-group">
+        <label for="username">Kullanıcı Adı</label>
+        <input type="text" id="username" placeholder="Kullanıcı adınızı girin">
+      </div>
+      
+      <div class="form-group">
+        <label for="robux-amount">Robux Miktarı</label>
+        <select id="robux-amount">
+          <option value="400">400 Robux</option>
+          <option value="800">800 Robux</option>
+          <option value="1700">1,700 Robux</option>
+          <option value="4500">4,500 Robux</option>
+          <option value="10000">10,000 Robux</option>
+        </select>
+      </div>
+      
+      <button type="button" class="btn-submit">Devam Et</button>
+    </form>
+  </div>
 
 </body>
 </html>
